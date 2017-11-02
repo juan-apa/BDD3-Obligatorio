@@ -21,6 +21,7 @@ public class ExceptionPersistencia extends Exception{
     public static final int INGRESAR_DATOS = 7;
     public static final int BORRAR_DATOS = 8;
     public static final int ABRIR_PROPERTIES = 9;
+    public static final int  CREAR_DB = 10;
     
     
     private static final String[] MENSAJES_ERROR= {
@@ -33,7 +34,8 @@ public class ExceptionPersistencia extends Exception{
         "Error al obtener los datos de la base de datos.",
         "Error al ingresar los datos a la base de datos.",
         "Error al borrar los datos de la base de datos.",
-        "Error al leer el archivo de configuración properties"
+        "Error al leer el archivo de configuración properties.",
+        "Error al crear la base de datos."
     };
     
     public ExceptionPersistencia() {
