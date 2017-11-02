@@ -12,14 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logica.Juguete;
-import logica.Ninio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
 import persistencia.Conexion;
-import persistencia.IPoolConexiones;
 import persistencia.PoolConexiones;
 import persistencia.consultas.Consultas;
 
@@ -42,6 +38,7 @@ public class DAOJuguetes {
         Connection c = con.getConexion();
         boolean ok = false;
         
+        System.out.println("Juguete: " + juguete.getNumero() + "; " + juguete.getDescripcion() + "; ");
         /*Hago las consultas a la base de datos.*/
         try {
             PreparedStatement pstmt = c.prepareStatement(Consultas.INGRESAR_JUGUETE);
@@ -53,7 +50,7 @@ public class DAOJuguetes {
             ok = true;
         } catch (SQLException ex) {
             ok = false;
-            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+            throw new ExceptionPersistencia(ExceptionPersistencia.INGRESAR_DATOS);
         } finally {
             /*Libero la conexion*/
             this.ipc.liberarConexion(con, ok);
@@ -66,16 +63,19 @@ public class DAOJuguetes {
         Connection c = con.getConexion();
         int largo = 0;
         boolean ok = false;
-        
+        System.out.println("Largo: " + largo);
         /*Hago la consulta a la base de datos*/
         try {
+            System.out.println("Largo: " + largo);
             PreparedStatement pstmt = c.prepareStatement(Consultas.CANTIDAD_JUGUETES_NINIO);
             pstmt.setInt(1, this.cedulaNinio);
             ResultSet rs = pstmt.executeQuery();
+            System.out.println("Largo: " + largo);
             /*Como solo me devuelve una tupla, no tengo que iterar, con un if me alcanza*/
             if(rs.next()){
-                largo = rs.getInt("cantidad");
+                largo = rs.getInt(1);
             }
+            System.out.println("Largo: " + largo);
             rs.close();
             pstmt.close();
             ok = true;
@@ -168,7 +168,7 @@ public class DAOJuguetes {
         try {
             PreparedStatement pstmt = c.prepareStatement(Consultas.BORRAR_JUGUETES_NINIO);
             pstmt.setInt(1, this.cedulaNinio);
-            pstmt.executeQuery();
+            pstmt.executeUpdate();
             pstmt.close();
             ok = true;
         } catch (SQLException e) {

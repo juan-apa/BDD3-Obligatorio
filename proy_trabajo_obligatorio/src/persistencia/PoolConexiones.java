@@ -54,9 +54,7 @@ public class PoolConexiones {
         }
         
         try {
-            System.out.println("antes de Class.forName");
             Class.forName(this.driver);
-            System.out.println("Luego de Class.forName");
         } catch (ClassNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.CARGAR_DRIVER);
         }

@@ -23,7 +23,6 @@ public class ServidorRMI {
             String puerto = "1099";
             LocateRegistry.createRegistry(Integer.parseInt(puerto));
             Fachada fachada = Fachada.getInstancia();
-            System.out.println("Antes de rebind");
             Naming.rebind("//"+ip+":"+puerto+"/fachada", fachada);
             System.out.println("Servidor corriendo...");
         } catch (ExceptionPersistencia ex) {

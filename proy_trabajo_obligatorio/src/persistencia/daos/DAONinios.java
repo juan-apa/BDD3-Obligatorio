@@ -128,8 +128,8 @@ public class DAONinios {
         
         /*Hago la consulta a la base de datos*/
         try {
-            /*TODO antes tengo que borrar los juguetes del ninio*/
-            /*TODO llamar al borrar juguetes del DAOJuguetes*/
+            /*Antes tengo que borrar los juguetes del ninio*/
+            this.find(cedulaNinio).getJuguetes().borrarJuguetes();
             PreparedStatement pstmt = c.prepareStatement(Consultas.BORRAR_NINIO);
             pstmt.setInt(1, cedulaNinio);
             pstmt.executeUpdate();
