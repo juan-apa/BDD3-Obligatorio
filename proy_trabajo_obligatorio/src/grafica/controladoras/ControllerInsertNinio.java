@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package grafica.controladoras;
 
 import grafica.ventanas.Ventana;
@@ -19,7 +18,7 @@ import logica.valueObjects.VONinio;
  *
  * @author Juan Aparicio
  */
-public class ControllerInsertNinio extends Controladora{
+public class ControllerInsertNinio extends Controladora {
 
     public ControllerInsertNinio(JFrame ven) {
         super(ven);
@@ -27,11 +26,11 @@ public class ControllerInsertNinio extends Controladora{
 
     public void insertNinio(String cedula, String nombre, String apellido) {
         int ced = 0;
-        try{
+        try {
             ced = Integer.parseInt(cedula);
             VONinio von = new VONinio(ced, nombre, apellido);
-        
-            if(Controladora.numerico(String.valueOf(von.getCedula()))){
+
+            if (Controladora.numerico(String.valueOf(von.getCedula()))) {
                 try {
                     this.getFachada().nuevoNinio(von);
                     ((Ventana) this.getVentana()).mostrarMensaje("Niño ingresado con éxito.", Ventana.SUCCESS);
@@ -42,12 +41,10 @@ public class ControllerInsertNinio extends Controladora{
                 } catch (RemoteException ex) {
                     Logger.getLogger(ControllerInsertNinio.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            else{
+            } else {
                 ((Ventana) this.getVentana()).mostrarMensaje("El campo cédula no tiene formato numérico.", 0);
             }
-        }
-        catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             ((Ventana) this.getVentana()).mostrarMensaje("El campo cédula solo puede contener números", Ventana.WARNING);
         }
     }

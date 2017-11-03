@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package grafica.controladoras;
 
 import grafica.ventanas.ListarNinios;
@@ -21,15 +20,15 @@ import logica.valueObjects.VONinio;
  *
  * @author Juan Aparicio
  */
-public class ControllerListarNinios extends Controladora{
-    
+public class ControllerListarNinios extends Controladora {
+
     public ControllerListarNinios(JFrame ven) {
         super(ven);
     }
-    
-    public List<VONinio> listarNinios(){
+
+    public List<VONinio> listarNinios() {
         List<VONinio> ret = new ArrayList<>();
-        try {  
+        try {
             ret = this.getFachada().listarNinios();
         } catch (ExceptionPersistencia ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
@@ -38,5 +37,5 @@ public class ControllerListarNinios extends Controladora{
         }
         return ret;
     }
-    
+
 }

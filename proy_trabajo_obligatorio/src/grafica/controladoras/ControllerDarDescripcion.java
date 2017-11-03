@@ -3,14 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package grafica.controladoras;
 
-import grafica.ventanas.DarDescripcion;
 import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import logica.Fachada;
 import logica.excepciones.ExceptionJuguete;
@@ -21,14 +17,15 @@ import logica.excepciones.ExceptionPersistencia;
  *
  * @author Juan Aparicio
  */
-public class ControllerDarDescripcion extends Controladora{
+public class ControllerDarDescripcion extends Controladora {
+
     private Fachada f;
-    
+
     public ControllerDarDescripcion(JFrame ven) {
         super(ven);
     }
-    
-    public void DarDescripcion(String cedulaNiño, String numeroJuguete){
+
+    public void DarDescripcion(String cedulaNiño, String numeroJuguete) {
         try {
             int cedN = Integer.parseInt(cedulaNiño);
             int numJ = Integer.parseInt(numeroJuguete);
@@ -46,5 +43,5 @@ public class ControllerDarDescripcion extends Controladora{
             ((Ventana) super.getVentana()).mostrarMensaje("Los campos cedula y número tienen que ser numéricos.", Ventana.WARNING);
         }
     }
-    
+
 }

@@ -11,7 +11,6 @@ import logica.valueObjects.VONinio;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import persistencia.AccesoBD;
 import logica.excepciones.ExceptionJuguete;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
@@ -26,14 +25,15 @@ import persistencia.daos.DAONinios;
  *
  * @author Juan Aparicio
  */
-public class Fachada  extends UnicastRemoteObject implements IFachada{
+public class Fachada extends UnicastRemoteObject implements IFachada {
+
     private static final long serialVersionUID = 1L;
 
     private static Fachada f = null;
     private DAONinios ninios;
-    
-    public static Fachada getInstancia() throws ExceptionPersistencia, RemoteException{
-        if(f == null){
+
+    public static Fachada getInstancia() throws ExceptionPersistencia, RemoteException {
+        if (f == null) {
             Fachada.f = new Fachada();
         }
         return Fachada.f;
@@ -54,7 +54,7 @@ public class Fachada  extends UnicastRemoteObject implements IFachada{
       juguete el número siguiente al del último juguete que ya tenía el niño. 
       Por ejemplo, si tenía 5 juguetes, asignará el nº 6. */
     public void nuevoJuguete(String desc, int cedN) throws ExceptionPersistencia, ExceptionNinio, RemoteException {
-        DAOJuguetes dj = this.ninios.find(cedN).getJuguetes(); 
+        DAOJuguetes dj = this.ninios.find(cedN).getJuguetes();
         dj.insback(new Juguete(dj.largo(), desc));
     }
 

@@ -13,7 +13,9 @@ import grafica.controladoras.ControllerInsertJuguete;
  * @author Juan Aparicio
  */
 public class InsertJuguete extends Ventana {
+
     private Controladora controladora;
+
     /**
      * Creates new form InsertJuguete
      */

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package grafica.ventanas;
 
 import java.util.ArrayList;
@@ -14,24 +13,24 @@ import logica.valueObjects.VObject;
  *
  * @author Juan Aparicio
  */
-public class ModeloTabla<T> extends javax.swing.table.AbstractTableModel{
+public class ModeloTabla<T> extends javax.swing.table.AbstractTableModel {
+
     private List<T> datos;
     private String[] cabezales;
-    
-    public ModeloTabla(){
+
+    public ModeloTabla() {
         this.datos = new ArrayList<T>();
         this.cabezales = new String[0];
     }
-    
-    public ModeloTabla(List<T> datos){
+
+    public ModeloTabla(List<T> datos) {
         this.datos = datos;
     }
-    
-    public ModeloTabla(List<T> datos, String[] cabezales){
+
+    public ModeloTabla(List<T> datos, String[] cabezales) {
         this.datos = datos;
         this.cabezales = cabezales;
     }
-    
 
     public List<T> getDatos() {
         return datos;
@@ -48,8 +47,7 @@ public class ModeloTabla<T> extends javax.swing.table.AbstractTableModel{
     public void setCabezales(String[] cabezales) {
         this.cabezales = cabezales;
     }
-    
-    
+
     @Override
     public int getRowCount() {
         return datos.size();
@@ -67,16 +65,17 @@ public class ModeloTabla<T> extends javax.swing.table.AbstractTableModel{
         System.out.println(val);
         return val;
     }
+
     @Override
-    public String getColumnName(int i){
+    public String getColumnName(int i) {
         return cabezales[i];
     }
-    
-    public void updateData(){
+
+    public void updateData() {
         this.fireTableDataChanged();
     }
-    
-    public void updateData(List<T> data){
+
+    public void updateData(List<T> data) {
         this.datos = data;
         this.fireTableDataChanged();
     }

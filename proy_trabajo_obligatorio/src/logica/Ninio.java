@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica;
 
 import persistencia.daos.DAOJuguetes;
@@ -13,6 +12,7 @@ import persistencia.daos.DAOJuguetes;
  * @author Juan Aparicio
  */
 public class Ninio {
+
     private int cedula;
     private String nombre;
     private String apellido;
@@ -48,12 +48,12 @@ public class Ninio {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
-    public DAOJuguetes getJuguetes(){
+
+    public DAOJuguetes getJuguetes() {
         return this.juguetes;
     }
-    
-    public void setDaoJuguetes(DAOJuguetes juguetes){
+
+    public void setDaoJuguetes(DAOJuguetes juguetes) {
         this.juguetes = juguetes;
     }
 }

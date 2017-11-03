@@ -13,7 +13,9 @@ import grafica.controladoras.ControllerBorrarNinioJuguete;
  * @author juan
  */
 public class BorrarNinJug extends Ventana {
+
     private Controladora controladora;
+
     /**
      * Creates new form BorrarNinJug
      */
@@ -94,7 +96,6 @@ public class BorrarNinJug extends Ventana {
     private void btn_delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delActionPerformed
         ((ControllerBorrarNinioJuguete) this.controladora).borrarNiniosYJuguetes(this.tf_ced_nin.getText());
     }//GEN-LAST:event_btn_delActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_del;

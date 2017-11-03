@@ -17,7 +17,7 @@ import logica.valueObjects.VONinio;
  * @author juan
  */
 public class ListarNinios extends Ventana {
-    
+
     private final String[] cabezales = {
         "Cédula",
         "Nombre",
@@ -26,7 +26,7 @@ public class ListarNinios extends Ventana {
     private List<VONinio> datos;
     private Controladora controladora;
     private AbstractTableModel tblmdl;
-    
+
     /**
      * Creates new form ListarNinios
      */
@@ -108,8 +108,8 @@ public class ListarNinios extends Ventana {
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         cargarTabla();
     }//GEN-LAST:event_btn_refreshActionPerformed
-    
-    private void cargarTabla(){
+
+    private void cargarTabla() {
         ((ModeloTabla) this.tbl_list_nin.getModel()).updateData(((ControllerListarNinios) controladora).listarNinios());
     }
 

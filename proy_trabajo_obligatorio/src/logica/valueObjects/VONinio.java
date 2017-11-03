@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica.valueObjects;
 
 import java.io.Serializable;
@@ -12,8 +11,8 @@ import java.io.Serializable;
  *
  * @author Juan Aparicio
  */
-public class VONinio extends VObject implements Serializable{
-    
+public class VONinio extends VObject implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private int cedula;
     private String nombre;
@@ -36,9 +35,9 @@ public class VONinio extends VObject implements Serializable{
     public String getApellido() {
         return apellido;
     }
-    
+
     @Override
-    public String[] toArray(){
+    public String[] toArray() {
         String[] ret = {
             String.valueOf(this.cedula),
             this.nombre,

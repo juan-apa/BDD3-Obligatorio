@@ -16,10 +16,11 @@ import logica.valueObjects.VOJuguete;
  * @author juan
  */
 public class ListarJuguetes extends Ventana {
-    
+
     private List<VOJuguete> datos;
     private Controladora controladora;
     private final String[] cabezales = {"Número", "Descripción", "Cédula Niño"};
+
     /**
      * Creates new form ListarJuguetes
      */
@@ -115,7 +116,6 @@ public class ListarJuguetes extends Ventana {
         ((ModeloTabla) this.tbl_listar_juguetes.getModel()).updateData(this.datos);
     }//GEN-LAST:event_btn_refreshActionPerformed
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_refresh;
     private javax.swing.JLabel jLabel1;

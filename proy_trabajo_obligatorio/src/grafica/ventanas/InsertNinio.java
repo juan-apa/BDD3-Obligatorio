@@ -13,8 +13,9 @@ import grafica.controladoras.ControllerInsertNinio;
  * @author juan
  */
 public class InsertNinio extends Ventana {
-    
+
     private Controladora con;
+
     /**
      * Creates new form InsertNinio
      */
@@ -155,7 +156,6 @@ public class InsertNinio extends Ventana {
 //            }
 //        });
 //    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_insert;
     private javax.swing.JLabel jLabel1;

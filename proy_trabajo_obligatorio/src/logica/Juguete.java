@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica;
 
 /**
@@ -11,6 +10,7 @@ package logica;
  * @author Juan Aparicio
  */
 public class Juguete {
+
     private int numero;
     private String descripcion;
 
@@ -34,5 +34,5 @@ public class Juguete {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
 }

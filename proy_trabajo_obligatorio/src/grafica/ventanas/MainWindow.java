@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  * @author juan
  */
 public class MainWindow extends javax.swing.JFrame {
-    
+
     private static JFrame ins_nin = null;
     private static JFrame ins_jug = null;
     private static JFrame list_nin = null;
@@ -49,10 +49,10 @@ public class MainWindow extends javax.swing.JFrame {
     public void setjLabel1(JLabel jLabel1) {
         this.jLabel1 = jLabel1;
     }
-    
+
     /**
      * Creates new form mainWindow
-     */    
+     */
     public MainWindow() {
         initComponents();
     }
@@ -164,7 +164,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ins_ninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_ninActionPerformed
-        if(ins_nin == null){
+        if (ins_nin == null) {
             ins_nin = new InsertNinio();
             ins_nin.setVisible(true);
             ins_nin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -173,7 +173,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ins_ninActionPerformed
 
     private void btn_ins_jugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_jugActionPerformed
-        if(ins_jug == null){
+        if (ins_jug == null) {
             ins_jug = new InsertJuguete();
             ins_jug.setVisible(true);
             ins_jug.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -182,7 +182,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ins_jugActionPerformed
 
     private void btn_list_ninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_list_ninActionPerformed
-        if(list_nin == null){
+        if (list_nin == null) {
             list_nin = new ListarNinios();
             list_nin.setVisible(true);
             list_nin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -191,7 +191,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_list_ninActionPerformed
 
     private void btn_list_jugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_list_jugActionPerformed
-        if(list_jug == null){
+        if (list_jug == null) {
             list_jug = new ListarJuguetes();
             list_jug.setVisible(true);
             list_jug.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -200,7 +200,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_list_jugActionPerformed
 
     private void btn_dar_descActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dar_descActionPerformed
-        if(dar_desc == null){
+        if (dar_desc == null) {
             dar_desc = new DarDescripcion();
             dar_desc.setVisible(true);
             dar_desc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -209,14 +209,14 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_dar_descActionPerformed
 
     private void btn_del_nin_jugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_del_nin_jugActionPerformed
-        if(del_nin_jug == null){
+        if (del_nin_jug == null) {
             del_nin_jug = new BorrarNinJug();
             del_nin_jug.setVisible(true);
             del_nin_jug.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) del_nin_jug).setParentWindow(this);
         }
     }//GEN-LAST:event_btn_del_nin_jugActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */

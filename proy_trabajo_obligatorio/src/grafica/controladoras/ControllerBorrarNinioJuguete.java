@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package grafica.controladoras;
 
 import grafica.ventanas.Ventana;
@@ -18,13 +17,13 @@ import logica.excepciones.ExceptionPersistencia;
  *
  * @author Juan Aparicio
  */
-public class ControllerBorrarNinioJuguete extends Controladora{
-    
+public class ControllerBorrarNinioJuguete extends Controladora {
+
     public ControllerBorrarNinioJuguete(JFrame ven) {
         super(ven);
     }
-    
-    public void borrarNiniosYJuguetes(String cedulaNinio){
+
+    public void borrarNiniosYJuguetes(String cedulaNinio) {
         try {
             int cedula = Integer.parseInt(cedulaNinio);
             super.getFachada().borrarNinioJuguetes(cedula);

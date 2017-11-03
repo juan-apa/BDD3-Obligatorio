@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica.excepciones;
 
 /**
  *
  * @author Juan Aparicio
  */
-public class ExceptionPersistencia extends Exception{
+public class ExceptionPersistencia extends Exception {
+
     public static final int ABRIR_CONEXION = 0;
     public static final int CERRAR_CONEXION = 1;
     public static final int ABRIR_TRANSACCION = 2;
@@ -21,10 +21,11 @@ public class ExceptionPersistencia extends Exception{
     public static final int INGRESAR_DATOS = 7;
     public static final int BORRAR_DATOS = 8;
     public static final int ABRIR_PROPERTIES = 9;
-    public static final int  CREAR_DB = 10;
-    
-    
-    private static final String[] MENSAJES_ERROR= {
+    public static final int CREAR_DB = 10;
+    public static final int CREAR_TABLE_NINIOS = 11;
+    public static final int CREAR_TABLE_JUGUETES = 12;
+
+    private static final String[] MENSAJES_ERROR = {
         "Error al abrir la conexión con la base de datos.",
         "Error al cerrar la conexión con la base de datos.",
         "Error al generar la transacción.",
@@ -35,17 +36,19 @@ public class ExceptionPersistencia extends Exception{
         "Error al ingresar los datos a la base de datos.",
         "Error al borrar los datos de la base de datos.",
         "Error al leer el archivo de configuración properties.",
-        "Error al crear la base de datos."
+        "Error al crear la base de datos.",
+        "Error al crear la tabla 'Ninios'.",
+        "Error al crear la tabla 'Juguetes'."
     };
-    
+
     public ExceptionPersistencia() {
     }
 
     public ExceptionPersistencia(String mensaje) {
         super(mensaje);
     }
-    
-    public ExceptionPersistencia(int errorCode){
+
+    public ExceptionPersistencia(int errorCode) {
         super(ExceptionPersistencia.MENSAJES_ERROR[errorCode]);
     }
 
@@ -57,4 +60,8 @@ public class ExceptionPersistencia extends Exception{
         super(thrwbl);
     }
     
+    public static String obtenerMensaje(int errorCode){
+        return MENSAJES_ERROR[errorCode];
+    }
+
 }

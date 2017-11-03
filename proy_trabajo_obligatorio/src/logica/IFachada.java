@@ -18,18 +18,18 @@ import logica.valueObjects.VONinio;
  *
  * @author juan
  */
-public interface IFachada extends Remote{
+public interface IFachada extends Remote {
+
     public void nuevoNinio(VONinio von) throws ExceptionPersistencia, ExceptionNinio, RemoteException;
-    
+
     public void nuevoJuguete(String desc, int cedN) throws ExceptionPersistencia, ExceptionNinio, RemoteException;
-    
+
     public List<VONinio> listarNinios() throws ExceptionPersistencia, RemoteException;
-    
+
     public List<VOJuguete> listarJuguetes(int cedN) throws ExceptionPersistencia, ExceptionNinio, RemoteException;
-    
+
     public String darDescripcion(int cedN, int numJ) throws ExceptionPersistencia, ExceptionNinio, ExceptionJuguete, RemoteException;
-    
+
     public void borrarNinioJuguetes(int cedN) throws ExceptionPersistencia, ExceptionNinio, RemoteException;
-    
-    
+
 }

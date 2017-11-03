@@ -13,8 +13,9 @@ import javax.swing.JOptionPane;
  * @author juan
  */
 public class Ventana extends javax.swing.JFrame {
+
     private JFrame parentWindow = null;
-    
+
     public static final int ERROR = JOptionPane.ERROR_MESSAGE;
     public static final int SUCCESS = JOptionPane.INFORMATION_MESSAGE;
     public static final int WARNING = JOptionPane.WARNING_MESSAGE;
@@ -86,24 +87,25 @@ public class Ventana extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-    
-    protected void setParentWindow(JFrame parent){
+    protected void setParentWindow(JFrame parent) {
         this.parentWindow = parent;
     }
-    
-    protected JFrame getParentWindow(){
+
+    protected JFrame getParentWindow() {
         return this.parentWindow;
     }
-    
-    public void mostrarMensaje(String mensaje, int codigo){
-        if(codigo == ERROR)
+
+    public void mostrarMensaje(String mensaje, int codigo) {
+        if (codigo == ERROR) {
             JOptionPane.showMessageDialog(null, mensaje, "Error", codigo);
-        if(codigo == SUCCESS)
+        }
+        if (codigo == SUCCESS) {
             JOptionPane.showMessageDialog(null, mensaje, "Mensaje", codigo);
-        if(codigo == WARNING)
+        }
+        if (codigo == WARNING) {
             JOptionPane.showMessageDialog(null, mensaje, "Advertencia", codigo);
+        }
     }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

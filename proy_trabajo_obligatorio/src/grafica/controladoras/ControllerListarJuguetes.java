@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package grafica.controladoras;
 
 import grafica.ventanas.Ventana;
@@ -21,13 +20,13 @@ import logica.valueObjects.VOJuguete;
  *
  * @author Juan Aparicio
  */
-public class ControllerListarJuguetes extends Controladora{
-    
+public class ControllerListarJuguetes extends Controladora {
+
     public ControllerListarJuguetes(JFrame ven) {
         super(ven);
     }
-    
-    public List<VOJuguete> listarJuguetes(String ced){
+
+    public List<VOJuguete> listarJuguetes(String ced) {
         List<VOJuguete> ret = new ArrayList<VOJuguete>();
         try {
             int cedNum = Integer.parseInt(ced);

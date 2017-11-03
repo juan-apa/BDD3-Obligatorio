@@ -10,5 +10,5 @@ package persistencia;
  * @author juan
  */
 public interface IConexion {
-    
+
 }

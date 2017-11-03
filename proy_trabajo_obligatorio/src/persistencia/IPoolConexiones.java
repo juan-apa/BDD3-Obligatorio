@@ -10,6 +10,8 @@ package persistencia;
  * @author juan
  */
 public interface IPoolConexiones {
+
     public IConexion obtenerConexion(boolean b);
+
     public void liberarConexion(IConexion ic, boolean b);
 }

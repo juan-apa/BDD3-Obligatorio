@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package persistencia;
 
 import java.sql.Connection;
@@ -12,14 +11,15 @@ import java.sql.Connection;
  *
  * @author Juan Aparicio
  */
-public class Conexion implements IConexion{
+public class Conexion implements IConexion {
+
     private Connection con;
 
     public Conexion(Connection con) {
         this.con = con;
     }
-    
-    public Connection getConexion(){
+
+    public Connection getConexion() {
         return this.con;
     }
 }

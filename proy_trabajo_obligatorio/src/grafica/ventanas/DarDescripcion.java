@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package grafica.ventanas;
+
 import grafica.controladoras.Controladora;
 import grafica.controladoras.ControllerDarDescripcion;
 import grafica.ventanas.MainWindow;
@@ -13,7 +14,9 @@ import grafica.ventanas.MainWindow;
  * @author juan
  */
 public class DarDescripcion extends Ventana {
+
     private Controladora controladora;
+
     /**
      * Creates new form DarDescripcion
      */
@@ -110,7 +113,6 @@ public class DarDescripcion extends Ventana {
         ((ControllerDarDescripcion) this.controladora).DarDescripcion(this.tf_ced_nin.getText(), this.tf_num_jug.getText());
     }//GEN-LAST:event_btn_dar_descActionPerformed
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_dar_desc;
     private javax.swing.JLabel jLabel1;

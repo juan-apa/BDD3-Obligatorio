@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package persistencia;
 
 import java.io.FileReader;
@@ -19,6 +18,7 @@ import logica.excepciones.ExceptionPersistencia;
  * @author Juan Aparicio
  */
 public class PoolConexiones {
+
     private String driver;
     private String url;
     private String user;
@@ -28,8 +28,8 @@ public class PoolConexiones {
     private int tamanio;
     private int creadas;
     private int tope;
-    
-    public PoolConexiones() throws ExceptionPersistencia{
+
+    public PoolConexiones() throws ExceptionPersistencia {
         Properties p = new Properties();
         try {
             p.load(new FileReader(".resources/config.properties"));
@@ -48,11 +48,11 @@ public class PoolConexiones {
         this.tope = 0;
         this.conexiones = new Conexion[tamanio];
         this.creadas = 0;
-        
-        for(int i = 0; i < this.tamanio; i++){
+
+        for (int i = 0; i < this.tamanio; i++) {
             this.conexiones[i] = null;
         }
-        
+
         try {
             System.out.println("antes de Class.forName");
             Class.forName(this.driver);
@@ -61,38 +61,37 @@ public class PoolConexiones {
             throw new ExceptionPersistencia(ExceptionPersistencia.CARGAR_DRIVER);
         }
     }
-    
-    public IConexion obtenerConexion(boolean modifica) throws ExceptionPersistencia{
+
+    public IConexion obtenerConexion(boolean modifica) throws ExceptionPersistencia {
         /*Las conexiones que estan en el array con tope, no estan siendo usadas,
         solo fueron usadas y ya fueron creadas.*/
         IConexion ret = null;
-        synchronized(this){
-            while(ret == null){
-                if(this.tope > 0){
+        synchronized (this) {
+            while (ret == null) {
+                if (this.tope > 0) {
                     /*Tengo alguna conexión para dar*/
                     ret = this.conexiones[tope - 1];
                     this.tope--;
-                }
-                else{
+                } else {
                     /*el tope está en 0, me fijo si puedo hacer una conexión*/
-                    if(this.creadas < this.tamanio){
+                    if (this.creadas < this.tamanio) {
                         /* Puedo crear una conexion.*/
                         Connection aux = null;
                         try {
                             System.out.println("llegue");
                             aux = DriverManager.getConnection(this.url, this.user, this.password);
-                            
+
                         } catch (SQLException ex) {
                             throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_CONEXION);
                         }
                         ret = new Conexion(aux);
-                        creadas++; 
-                    }
-                    else{
+                        creadas++;
+                    } else {
                         /*No puedo crear una conexion.*/
-                        try{
+                        try {
                             wait();
-                        }catch(Exception e){}
+                        } catch (Exception e) {
+                        }
                     }
                 }
             }
@@ -109,18 +108,19 @@ public class PoolConexiones {
         /*finalmente devuelvo el resultado.*/
         return ret;
     }
-    
-    public void liberarConexion(IConexion con, boolean ok) throws ExceptionPersistencia{
-        synchronized(this){
+
+    public void liberarConexion(IConexion con, boolean ok) throws ExceptionPersistencia {
+        synchronized (this) {
             Connection aux = ((Conexion) con).getConexion();
-            if(ok){ /*Todo salió bien, entonces commiteo la transacción.*/
+            if (ok) {
+                /*Todo salió bien, entonces commiteo la transacción.*/
                 try {
                     aux.commit();
                 } catch (SQLException e) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.COMMIT_TRANSACCION);
                 }
-            }
-            else{ /*Algo no salió bien entonces hago un rollback de la transacción.*/
+            } else {
+                /*Algo no salió bien entonces hago un rollback de la transacción.*/
                 try {
                     aux.rollback();
                 } catch (SQLException e) {
