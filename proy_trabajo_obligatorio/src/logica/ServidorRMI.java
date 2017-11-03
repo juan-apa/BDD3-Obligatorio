@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -56,7 +57,7 @@ public class ServidorRMI {
         p.setProperty("driver", "com.mysql.jdbc.Driver");
         p.setProperty("url", "jdbc:mysql://localhost/");
         p.setProperty("user", "root");
-        p.setProperty("password", "290980196");
+        p.setProperty("password", "root");//"290980196");
         
         String url = p.getProperty("url");
         String driver = p.getProperty("driver");
@@ -67,18 +68,48 @@ public class ServidorRMI {
             Class.forName(driver);
             Connection con = DriverManager.getConnection(url,user,password);
             String crearBaseDatos = Consultas.CREAR_BASE_DATOS;
+            System.out.println("Se crea la base de datos");
             String crearTablaJuguetes = Consultas.CREAR_TABLA_JUGUETES;
             String crearTablaNinios = Consultas.CREAR_TABLA_NINIOS;
             Statement stmt = con.createStatement();
             stmt.executeUpdate(crearBaseDatos);
-            stmt.executeUpdate(crearTablaNinios);
-            stmt.executeUpdate(crearTablaJuguetes);
+             if (existeTablaJuguetes(con)){
+                System.out.println("Se crea la tabla Jugetes");
+                stmt.executeUpdate(crearTablaJuguetes);
+            }
+            if (existeTablaNinios(con)){
+                System.out.println("Se crea la tabla Ninos");
+                stmt.executeUpdate(crearTablaNinios);
+            }
+           
             stmt.close();
             con.close();
         } catch (SQLException ex) {
             throw new ExceptionPersistencia(ex.getMessage());
         }
     }
+    public static boolean existeTablaJuguetes(Connection con) throws SQLException{
+        boolean existeTabla = false;
+        String consultarExisteTablaJuguetes = "Select * from p4ej1.juguetes";
+        Statement consulta = con.createStatement();
+        ResultSet rs = consulta.executeQuery(consultarExisteTablaJuguetes);
+        while(rs.next()){
+            existeTabla = true;
+        }
+        consulta.close();
+        return existeTabla;
+    }
     
+    public static boolean existeTablaNinios(Connection con) throws SQLException{
+        boolean existeTabla = false;
+        String consultarExisteTablaNinios = "Select * from p4ej1.ninios";
+        Statement consulta = con.createStatement();
+        ResultSet rs = consulta.executeQuery(consultarExisteTablaNinios);
+        while(rs.next()){
+            existeTabla = true;
+        }
+        consulta.close();
+        return existeTabla;
+    }
     
 }

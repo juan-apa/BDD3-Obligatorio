@@ -11,7 +11,7 @@ package persistencia.consultas;
  * @author Juan Aparicio
  */
 public class Consultas {
-    public static final String CREAR_BASE_DATOS = "CREATE DATABASE P4EJ1";
+    public static final String CREAR_BASE_DATOS = "create database IF NOT EXISTS p4ej1";
     public static final String CREAR_TABLA_NINIOS = "CREATE TABLE P4EJ1.Ninios (cedula int primary key not null,nombre varchar(45) not null,apellido varchar(45) not null)";
     public static final String CREAR_TABLA_JUGUETES = "CREATE TABLE P4EJ1.Juguetes (numero int primary key not null,descripcion varchar(45),cedula int NOT NULL,FOREIGN KEY (cedula) REFERENCES P4EJ1.Ninios(cedula))";
     public static final String LISTAR_NINIOS = "SELECT * FROM P4EJ1.Ninios ORDER BY cedula DESC";
