@@ -15,6 +15,7 @@ import logica.Juguete;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
 import persistencia.Conexion;
+import persistencia.IConexion;
 import persistencia.IPoolConexiones;
 import persistencia.PoolConexiones;
 import persistencia.consultas.Consultas;
@@ -26,74 +27,63 @@ import persistencia.consultas.Consultas;
 public class DAOJuguetes {
 
     private int cedulaNinio;
-    private PoolConexiones ipc;
 
     public DAOJuguetes(int cedulaNinio) throws ExceptionPersistencia {
-        this.ipc = new PoolConexiones();
         this.cedulaNinio = cedulaNinio;
     }
 
-    public void insback(Juguete juguete) throws ExceptionPersistencia {
+    public void insback(Juguete juguete, IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(true);
+        Conexion con = (Conexion) ic;
         Connection c = con.getConexion();
-        boolean ok = false;
 
         /*Hago las consultas a la base de datos.*/
         try {
+            System.out.println("Antes prepareStatement");
             PreparedStatement pstmt = c.prepareStatement(Consultas.INGRESAR_JUGUETE);
             pstmt.setInt(1, juguete.getNumero());
             pstmt.setString(2, juguete.getDescripcion());
             pstmt.setInt(3, this.cedulaNinio);
+            System.out.println("Despues setInt 3, " + juguete.getNumero() + "  "  +juguete.getDescripcion() + "  " +this.cedulaNinio);
             pstmt.executeUpdate();
+            System.out.println("Despues update");
             pstmt.close();
-            ok = true;
         } catch (SQLException ex) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
     }
 
-    public int largo() throws ExceptionPersistencia {
+    public int largo(IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(true);
+        Conexion con = (Conexion) ic;
         Connection c = con.getConexion();
         int largo = 0;
-        boolean ok = false;
 
         /*Hago la consulta a la base de datos*/
         try {
+            System.out.println("persistencia.daos.DAOJuguetes.largo()");
             PreparedStatement pstmt = c.prepareStatement(Consultas.CANTIDAD_JUGUETES_NINIO);
             pstmt.setInt(1, this.cedulaNinio);
             ResultSet rs = pstmt.executeQuery();
             /*Como solo me devuelve una tupla, no tengo que iterar, con un if me alcanza*/
             if (rs.next()) {
-                largo = rs.getInt("cantidad");
+                largo = rs.getInt(1);
             }
             rs.close();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
 
         /*Devuelvo el resultado*/
         return largo;
     }
 
-    public Juguete k_esimo(int numeroJuguete) throws ExceptionPersistencia {
+    public Juguete k_esimo(int numeroJuguete, IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
         Juguete jug = null;
-        Conexion con = (Conexion) this.ipc.obtenerConexion(true);
+        Conexion con = (Conexion) ic;
         Connection c = con.getConexion();
-        boolean ok = false;
 
         /*Obtengo los datos de la base de datos*/
         try {
@@ -109,25 +99,19 @@ public class DAOJuguetes {
             }
             rs.close();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
 
         /*Devuelvo los datos*/
         return jug;
     }
 
-    public List<VOJuguete> listarJuguetes() throws ExceptionPersistencia {
+    public List<VOJuguete> listarJuguetes(IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(false);
+        Conexion con = (Conexion) ic;
         Connection c = ((Conexion) con).getConexion();
         ArrayList<VOJuguete> ret = new ArrayList<>();
-        boolean ok = false;
 
         /*Obtengo los datos de la base de datos*/
         try {
@@ -143,37 +127,27 @@ public class DAOJuguetes {
             }
             rs.close();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
+            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         }
 
         /*Devuelvo los datos*/
         return ret;
     }
 
-    public void borrarJuguetes() throws ExceptionPersistencia {
+    public void borrarJuguetes(IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(true);
+        Conexion con = (Conexion) ic;
         Connection c = ((Conexion) con).getConexion();
-        boolean ok = false;
 
         /*Borro los datos de la base de datos*/
         try {
             PreparedStatement pstmt = c.prepareStatement(Consultas.BORRAR_JUGUETES_NINIO);
             pstmt.setInt(1, this.cedulaNinio);
-            pstmt.executeQuery();
+            pstmt.executeUpdate();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.BORRAR_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
     }
 }

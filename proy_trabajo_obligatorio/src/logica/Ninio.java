@@ -5,6 +5,11 @@
  */
 package logica;
 
+import java.util.List;
+import logica.excepciones.ExceptionPersistencia;
+import logica.valueObjects.VOJuguete;
+import persistencia.Conexion;
+import persistencia.IConexion;
 import persistencia.daos.DAOJuguetes;
 
 /**
@@ -48,12 +53,32 @@ public class Ninio {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
-    public DAOJuguetes getJuguetes() {
-        return this.juguetes;
+    
+    public boolean tieneJuguete(int numJ, IConexion ic) throws ExceptionPersistencia{
+        boolean ret = false;
+        if(this.juguetes.largo(ic) > numJ){
+            ret = true;
+        }
+        return ret;
     }
-
-    public void setDaoJuguetes(DAOJuguetes juguetes) {
-        this.juguetes = juguetes;
+    
+    public void insertJuguete(Juguete j, IConexion ic) throws ExceptionPersistencia{
+        this.juguetes.insback(j, ic);
+    }
+    
+    public Juguete obtenerJuguete(int numJ, IConexion ic) throws ExceptionPersistencia{
+        return this.juguetes.k_esimo(numJ, ic);
+    }
+    
+    public List<VOJuguete> listarJuguetes(IConexion ic) throws ExceptionPersistencia{
+        return this.juguetes.listarJuguetes(ic);
+    }
+    
+    public void borrarJuguetes(IConexion ic) throws ExceptionPersistencia{
+        this.juguetes.borrarJuguetes(ic);
+    }
+    
+    public int cantidadJuguetes(IConexion ic) throws ExceptionPersistencia{
+        return this.juguetes.largo(ic);
     }
 }

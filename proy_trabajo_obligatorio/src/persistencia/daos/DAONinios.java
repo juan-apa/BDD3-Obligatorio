@@ -17,6 +17,7 @@ import logica.valueObjects.VONinio;
 import persistencia.IPoolConexiones;
 import persistencia.PoolConexiones;
 import persistencia.Conexion;
+import persistencia.IConexion;
 import persistencia.consultas.Consultas;
 
 /**
@@ -25,19 +26,14 @@ import persistencia.consultas.Consultas;
  */
 public class DAONinios {
 
-    /*Atributos para acceso a la DB*/
-    private PoolConexiones ipc;
-
     public DAONinios() throws ExceptionPersistencia {
-        ipc = new PoolConexiones();
     }
 
-    public boolean member(int cedulaNinio) throws ExceptionPersistencia {
+    public boolean member(int cedulaNinio, IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(false);
-        Connection c = ((Conexion) con).getConexion();
+        Conexion con = (Conexion) ic;
+        Connection c = con.getConexion();
         boolean existeNinio = false;
-        boolean ok = false;
 
         /*Hago la consulta con la base de datos.*/
         PreparedStatement pstmt = null;
@@ -50,23 +46,18 @@ public class DAONinios {
             }
             rs.close();
             pstmt.close();
-            ok = true;
         } catch (SQLException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
 
         /*Devuelvo el resultado*/
         return existeNinio;
     }
 
-    public void insert(Ninio ninio) throws ExceptionPersistencia {
+    public void insert(Ninio ninio, IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(true);
-        Connection c = ((Conexion) con).getConexion();
-        boolean ok = false;
+        Conexion con = (Conexion) ic;
+        Connection c = con.getConexion();
 
         /*Hago la consulta a la base de datos*/
         try {
@@ -76,22 +67,16 @@ public class DAONinios {
             pstmt.setString(3, ninio.getApellido());
             pstmt.executeUpdate();
             pstmt.close();
-            ok = true;
         } catch (SQLException ex) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
     }
 
-    public Ninio find(int cedulaNinio) throws ExceptionPersistencia {
+    public Ninio find(int cedulaNinio, IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
         Ninio ninio = null;
-        Conexion con = (Conexion) this.ipc.obtenerConexion(false);
-        Connection c = ((Conexion) con).getConexion();
-        boolean ok = false;
+        Conexion con = (Conexion) ic;
+        Connection c = con.getConexion();
 
         /*Hago la consulta a la base de datos*/
         try {
@@ -103,48 +88,37 @@ public class DAONinios {
             }
             rs.close();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
 
         return ninio;
     }
 
-    public void delete(int cedulaNinio) throws ExceptionPersistencia {
+    public void delete(int cedulaNinio, IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(true);
-        Connection c = ((Conexion) con).getConexion();
-        boolean ok = false;
+        Conexion con = (Conexion) ic;
+        Connection c = con.getConexion();
 
         /*Hago la consulta a la base de datos*/
         try {
             /*TODO antes tengo que borrar los juguetes del ninio*/
- /*TODO llamar al borrar juguetes del DAOJuguetes*/
+            this.find(cedulaNinio, ic).borrarJuguetes(ic);
+            System.out.println("Despues borrar juguetes");
             PreparedStatement pstmt = c.prepareStatement(Consultas.BORRAR_NINIO);
             pstmt.setInt(1, cedulaNinio);
             pstmt.executeUpdate();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.BORRAR_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
     }
 
-    public List<VONinio> listarNinios() throws ExceptionPersistencia {
+    public List<VONinio> listarNinios(IConexion ic) throws ExceptionPersistencia {
         /*Inicializo las variables*/
-        Conexion con = (Conexion) this.ipc.obtenerConexion(false);
-        Connection c = ((Conexion) con).getConexion();
+        Conexion con = (Conexion) ic;
+        Connection c = con.getConexion();
         List<VONinio> ret = new ArrayList<>();
-        boolean ok = false;
 
         /*Hago la consulta a la base de datos*/
         try {
@@ -159,16 +133,13 @@ public class DAONinios {
             }
             rs.close();
             pstmt.close();
-            ok = true;
         } catch (SQLException e) {
-            ok = false;
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } finally {
-            /*Libero la conexion*/
-            this.ipc.liberarConexion(con, ok);
         }
 
         /*Devuelvo el resultado*/
         return ret;
     }
+    
+    
 }

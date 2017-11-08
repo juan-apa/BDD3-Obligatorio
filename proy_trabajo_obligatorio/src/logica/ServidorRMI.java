@@ -27,8 +27,14 @@ public class ServidorRMI {
 
     public static void main(String[] args) {
         try {
-            String ip = "localhost";
-            String puerto = "1099";
+            Properties p = new Properties();
+            try {
+                p.load(new FileReader(".resources/config.properties"));
+            } catch (IOException ex) {
+                throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
+            }
+            String ip = p.getProperty("ip");
+            String puerto = p.getProperty("puerto");
             LocateRegistry.createRegistry(Integer.parseInt(puerto));
             Fachada fachada = Fachada.getInstancia();
             System.out.println("Antes de rebind");

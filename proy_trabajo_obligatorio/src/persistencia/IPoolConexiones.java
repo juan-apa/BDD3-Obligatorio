@@ -5,13 +5,15 @@
  */
 package persistencia;
 
+import logica.excepciones.ExceptionPersistencia;
+
 /**
  *
  * @author juan
  */
 public interface IPoolConexiones {
 
-    public IConexion obtenerConexion(boolean b);
+    public IConexion obtenerConexion(boolean modifica) throws ExceptionPersistencia;
 
-    public void liberarConexion(IConexion ic, boolean b);
+    public void liberarConexion(IConexion con, boolean ok) throws ExceptionPersistencia;
 }

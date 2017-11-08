@@ -36,11 +36,7 @@ public class CreacionBDD {
         } catch (IOException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
         }
-        p.setProperty("driver", "com.mysql.jdbc.Driver");
-        p.setProperty("url", "jdbc:mysql://localhost/");
-        p.setProperty("user", "root");
-        p.setProperty("password", "290980196");
-
+   
         String url = p.getProperty("url");
         String driver = p.getProperty("driver");
         String user = p.getProperty("user");

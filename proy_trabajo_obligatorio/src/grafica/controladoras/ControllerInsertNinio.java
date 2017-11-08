@@ -40,7 +40,7 @@ public class ControllerInsertNinio extends Controladora {
                     ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
                 } catch (RemoteException ex) {
                     Logger.getLogger(ControllerInsertNinio.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                } 
             } else {
                 ((Ventana) this.getVentana()).mostrarMensaje("El campo cédula no tiene formato numérico.", 0);
             }
