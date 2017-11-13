@@ -25,7 +25,7 @@ import persistencia.consultas.Consultas;
  * @author Juan Aparicio
  */
 public class DAOJuguetes {
-
+    
     private int cedulaNinio;
 
     public DAOJuguetes(int cedulaNinio) throws ExceptionPersistencia {
@@ -39,14 +39,11 @@ public class DAOJuguetes {
 
         /*Hago las consultas a la base de datos.*/
         try {
-            System.out.println("Antes prepareStatement");
             PreparedStatement pstmt = c.prepareStatement(Consultas.INGRESAR_JUGUETE);
             pstmt.setInt(1, juguete.getNumero());
             pstmt.setString(2, juguete.getDescripcion());
             pstmt.setInt(3, this.cedulaNinio);
-            System.out.println("Despues setInt 3, " + juguete.getNumero() + "  "  +juguete.getDescripcion() + "  " +this.cedulaNinio);
             pstmt.executeUpdate();
-            System.out.println("Despues update");
             pstmt.close();
         } catch (SQLException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
