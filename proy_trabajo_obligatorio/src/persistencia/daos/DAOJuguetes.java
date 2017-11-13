@@ -58,7 +58,6 @@ public class DAOJuguetes {
 
         /*Hago la consulta a la base de datos*/
         try {
-            System.out.println("persistencia.daos.DAOJuguetes.largo()");
             PreparedStatement pstmt = c.prepareStatement(Consultas.CANTIDAD_JUGUETES_NINIO);
             pstmt.setInt(1, this.cedulaNinio);
             ResultSet rs = pstmt.executeQuery();

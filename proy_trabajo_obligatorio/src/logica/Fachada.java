@@ -77,7 +77,6 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
             else {
                 throw new ExceptionNinio(ExceptionNinio.NO_EXISTE_NINIO);
             }
-            
             this.ipc.liberarConexion(ic, true);
         } catch (Exception e) {
             this.ipc.liberarConexion(ic, false);
