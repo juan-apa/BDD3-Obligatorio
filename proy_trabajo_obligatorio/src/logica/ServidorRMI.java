@@ -11,13 +11,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 import logica.excepciones.ExceptionPersistencia;
-import persistencia.consultas.Consultas;
 
 /**
  *

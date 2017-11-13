@@ -36,10 +36,6 @@ public class PoolConexiones implements IPoolConexiones{
         } catch (IOException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
         }
-        p.setProperty("driver", "com.mysql.jdbc.Driver");
-        p.setProperty("url", "jdbc:mysql://localhost/");
-        p.setProperty("user", "root");
-        p.setProperty("password", "290980196");
         this.driver = p.getProperty("driver");
         this.url = p.getProperty("url");
         this.user = p.getProperty("user");
@@ -54,9 +50,7 @@ public class PoolConexiones implements IPoolConexiones{
         }
 
         try {
-            System.out.println("antes de Class.forName");
             Class.forName(this.driver);
-            System.out.println("Luego de Class.forName");
         } catch (ClassNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.CARGAR_DRIVER);
         }
