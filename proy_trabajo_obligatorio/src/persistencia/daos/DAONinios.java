@@ -14,8 +14,6 @@ import java.util.List;
 import logica.Ninio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VONinio;
-import persistencia.IPoolConexiones;
-import persistencia.PoolConexiones;
 import persistencia.Conexion;
 import persistencia.IConexion;
 import persistencia.consultas.Consultas;
@@ -24,7 +22,7 @@ import persistencia.consultas.Consultas;
  *
  * @author Juan Aparicio
  */
-public class DAONinios {
+public class DAONinios implements IDAONinios{
 
     public DAONinios() throws ExceptionPersistencia {
     }

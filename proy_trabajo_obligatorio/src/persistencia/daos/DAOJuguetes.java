@@ -16,15 +16,13 @@ import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
 import persistencia.Conexion;
 import persistencia.IConexion;
-import persistencia.IPoolConexiones;
-import persistencia.PoolConexiones;
 import persistencia.consultas.Consultas;
 
 /**
  *
  * @author Juan Aparicio
  */
-public class DAOJuguetes {
+public class DAOJuguetes implements IDAOJuguetes{
     
     private int cedulaNinio;
 

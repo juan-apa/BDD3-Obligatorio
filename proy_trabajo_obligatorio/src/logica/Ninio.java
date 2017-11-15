@@ -8,9 +8,9 @@ package logica;
 import java.util.List;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
-import persistencia.Conexion;
 import persistencia.IConexion;
 import persistencia.daos.DAOJuguetes;
+import persistencia.daos.IDAOJuguetes;
 
 /**
  *
@@ -21,9 +21,9 @@ public class Ninio {
     private int cedula;
     private String nombre;
     private String apellido;
-    private DAOJuguetes juguetes;
+    private IDAOJuguetes juguetes;
 
-    public Ninio(int cedula, String nombre, String apellido, DAOJuguetes juguetes) {
+    public Ninio(int cedula, String nombre, String apellido, IDAOJuguetes juguetes) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;

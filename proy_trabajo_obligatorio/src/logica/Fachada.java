@@ -5,12 +5,17 @@
  */
 package logica;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import logica.valueObjects.VONinio;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import logica.excepciones.ExceptionFabrica;
 import logica.excepciones.ExceptionJuguete;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
@@ -18,8 +23,10 @@ import persistencia.IConexion;
 import persistencia.IPoolConexiones;
 import persistencia.PoolConexiones;
 import logica.valueObjects.VOJuguete;
+import persistencia.FabricaAbstracta;
 import persistencia.daos.DAOJuguetes;
 import persistencia.daos.DAONinios;
+import persistencia.daos.IDAONinios;
 
 /**
  *
@@ -30,17 +37,37 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
     private static final long serialVersionUID = 1L;
 
     private static Fachada f = null;
-    private DAONinios ninios;
+    private FabricaAbstracta fabrica;
+    private IDAONinios ninios;
     private IPoolConexiones ipc = null;
 
-    public static Fachada getInstancia() throws ExceptionPersistencia, RemoteException {
+    public static Fachada getInstancia() throws ExceptionPersistencia, RemoteException, ExceptionFabrica {
         if (f == null) {
             Fachada.f = new Fachada();
         }
         return Fachada.f;
     }
 
-    private Fachada() throws ExceptionPersistencia, RemoteException {
+    private Fachada() throws ExceptionPersistencia, RemoteException, ExceptionFabrica {
+        try {
+            Properties p = new Properties();
+            p.load(new FileReader(".resources/config.properties"));
+            this.fabrica = (FabricaAbstracta) Class.forName(p.getProperty("fabrica")).newInstance();
+            this.ninios = fabrica.crearIDAONinios();
+        } catch (FileNotFoundException ex) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
+        } catch (IOException ex) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
+        } catch (ClassNotFoundException ex) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_PROPERTY);
+        } catch (InstantiationException ex) {
+            throw new ExceptionFabrica(ExceptionFabrica.ERROR_CREAR_FABRICA);
+        } catch (IllegalAccessException ex) {
+            throw new ExceptionFabrica(ExceptionFabrica.ERROR_CREAR_FABRICA);
+        }
+        
+        
+        
         this.ninios = new DAONinios();
         this.ipc = new PoolConexiones();
     }
@@ -50,7 +77,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
         IConexion ic = this.ipc.obtenerConexion(true);
         try {
             if(! this.ninios.member(von.getCedula(), ic)){
-                Ninio insert = new Ninio(von.getCedula(), von.getNombre(), von.getApellido(), new DAOJuguetes(von.getCedula()));
+                Ninio insert = new Ninio(von.getCedula(), von.getNombre(), von.getApellido(), this.fabrica.crearIDAOJuguetes(von.getCedula()));
                 this.ninios.insert(insert, ic);
             }
             else{

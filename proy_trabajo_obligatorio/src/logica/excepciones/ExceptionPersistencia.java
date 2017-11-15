@@ -24,6 +24,7 @@ public class ExceptionPersistencia extends Exception {
     public static final int CREAR_DB = 10;
     public static final int CREAR_TABLE_NINIOS = 11;
     public static final int CREAR_TABLE_JUGUETES = 12;
+    public static final int OBTENER_PROPERTY = 13;
 
     private static final String[] MENSAJES_ERROR = {
         "Error al abrir la conexión con la base de datos.",
@@ -38,7 +39,8 @@ public class ExceptionPersistencia extends Exception {
         "Error al leer el archivo de configuración properties.",
         "Error al crear la base de datos.",
         "Error al crear la tabla 'Ninios'.",
-        "Error al crear la tabla 'Juguetes'."
+        "Error al crear la tabla 'Juguetes'.",
+        "Error al leer la propiedad del archivo de configuraciones"
     };
 
     public ExceptionPersistencia() {
