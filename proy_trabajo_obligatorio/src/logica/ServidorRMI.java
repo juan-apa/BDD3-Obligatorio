@@ -12,6 +12,9 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import logica.excepciones.ExceptionFabrica;
 import logica.excepciones.ExceptionPersistencia;
 
 /**
@@ -35,13 +38,16 @@ public class ServidorRMI {
             System.out.println("Antes de rebind");
             Naming.rebind("//" + ip + ":" + puerto + "/fachada", fachada);
             System.out.println("Servidor corriendo...");
+            System.out.println(System.getProperty("user.dir"));
         } catch (ExceptionPersistencia ex) {
             System.err.println("Error al inicializar el serv. 1: " + ex.getMessage() + "; ");
             ex.printStackTrace();
         } catch (RemoteException ex) {
             System.err.println("Error al inicializar el serv. 2: " + ex.getMessage());
         } catch (MalformedURLException ex) {
-            System.err.println("Error al inicializar el serv. 3");
+            System.err.println("Error al inicializar el serv. 3: " + ex.getMessage());
+        } catch (ExceptionFabrica ex) {
+            System.err.println("Error al inicializar el serv. 4: " + ex.getMessage());
         }
     }
 

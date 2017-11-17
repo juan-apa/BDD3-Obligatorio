@@ -23,6 +23,7 @@ public class CreacionBDD {
 
     public static void main(String[] args) {
         try {
+            System.out.println(System.getProperty("user.dir"));
             crearBaseDeDatos();
         } catch (ExceptionPersistencia ex) {
             System.err.println(ex.getMessage());
