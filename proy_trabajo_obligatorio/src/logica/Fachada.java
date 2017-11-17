@@ -54,6 +54,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
             p.load(new FileReader(".resources/config.properties"));
             this.fabrica = (FabricaAbstracta) Class.forName(p.getProperty("fabrica")).newInstance();
             this.ninios = fabrica.crearIDAONinios();
+            this.ipc = fabrica.crearIPoolConexiones();
         } catch (FileNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
         } catch (IOException ex) {

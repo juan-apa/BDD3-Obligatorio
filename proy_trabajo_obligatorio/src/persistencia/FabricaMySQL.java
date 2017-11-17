@@ -25,4 +25,9 @@ public class FabricaMySQL implements FabricaAbstracta {
         return new DAOJuguetes(cedulaNinio);
     }
 
+    @Override
+    public IPoolConexiones crearIPoolConexiones() throws ExceptionPersistencia {
+        return new PoolConexiones();
+    }
+
 }

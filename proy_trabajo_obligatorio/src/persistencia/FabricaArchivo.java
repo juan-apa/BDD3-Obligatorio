@@ -27,5 +27,12 @@ public class FabricaArchivo implements FabricaAbstracta{
     public IDAOJuguetes crearIDAOJuguetes(int cedulaNinio) throws ExceptionPersistencia {
         return new DAOJuguetesArchivo(cedulaNinio);
     }
+
+    @Override
+    public IPoolConexiones crearIPoolConexiones() throws ExceptionPersistencia {
+        return new PoolConexionArchivo();
+    }
+    
+    
     
 }
