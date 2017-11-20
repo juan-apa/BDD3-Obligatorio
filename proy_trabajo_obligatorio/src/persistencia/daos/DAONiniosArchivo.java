@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,13 +25,12 @@ import persistencia.IConexion;
  *
  * @author Juan Aparicio
  */
-public class DAONiniosArchivo implements IDAONinios{
+public class DAONiniosArchivo implements IDAONinios, Serializable{
     
     private File folder;
     
     public DAONiniosArchivo(){
-        /* + "/.resources"*/
-        this.folder = new File(System.getProperty("user.dir"));
+        this.folder = new File(System.getProperty("user.dir")+"/.resources/archivos");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class DAONiniosArchivo implements IDAONinios{
         ObjectOutputStream flujo = null;
         
         try {
-            String archivo = System.getProperty("user.dir")+"/.resources/ninios-" + ninio.getCedula() + ".txt";
+            String archivo = this.folder.getPath()+"/ninios-" + ninio.getCedula() + ".txt";
             Arch = new FileOutputStream(archivo);
             flujo = new ObjectOutputStream(Arch);
             flujo.writeObject(ninio);

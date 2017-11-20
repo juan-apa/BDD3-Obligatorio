@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,20 +30,21 @@ import persistencia.IConexion;
  *
  * @author Juan Aparicio
  */
-public class DAOJuguetesArchivo implements IDAOJuguetes{
+public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
+    private static final long serialVersionUID = 1L;
     private int cedulaNinio;
     private File folder;
     
     public DAOJuguetesArchivo(int cedulaNinio){
         this.cedulaNinio = cedulaNinio;
-        this.folder = new File(System.getProperty("user.dir"));
+        this.folder = new File(System.getProperty("user.dir")+"/.resources/archivos");
     }
     
     @Override
     public void insback(Juguete juguete, IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
         try{
-            String archivo = "juguetes - " + this.cedulaNinio + ".txt";
+            String archivo = this.folder.getPath() + "juguetes - " + this.cedulaNinio + ".txt";
             FileOutputStream Arch = new FileOutputStream(archivo);
             ObjectOutputStream flujo = new ObjectOutputStream(Arch);
             flujo.writeObject(juguete);
@@ -59,8 +61,7 @@ public class DAOJuguetesArchivo implements IDAOJuguetes{
     public int largo(IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
         int largo = 0;
-        File folder = new File(System.getProperty("user.dir"));
-        for(File archJuguete : folder.listFiles()){
+        for(File archJuguete : this.folder.listFiles()){
             String nombreArch = archJuguete.getName();
             if(nombreArch.contains("jugutes - " + String.valueOf(this.cedulaNinio))){
                 largo ++;

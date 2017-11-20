@@ -57,13 +57,15 @@ public class PoolConexionArchivo implements IPoolConexiones{
 
     @Override
     public void liberarConexion(IConexion con, boolean ok) throws ExceptionPersistencia {
-        if(((ConexionArchivo) con).getModifica()){
-            this.escritores--;
+        synchronized(this){
+            if(((ConexionArchivo) con).getModifica()){
+                this.escritores--;
+            }
+            else{
+                this.lectores--;
+            }
+            this.notifyAll();
         }
-        else{
-            this.lectores--;
-        }
-        this.notifyAll();
     }
 
 }

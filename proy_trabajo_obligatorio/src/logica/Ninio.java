@@ -5,19 +5,19 @@
  */
 package logica;
 
+import java.io.Serializable;
 import java.util.List;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
 import persistencia.IConexion;
-import persistencia.daos.DAOJuguetes;
 import persistencia.daos.IDAOJuguetes;
 
 /**
  *
  * @author Juan Aparicio
  */
-public class Ninio {
-
+public class Ninio implements Serializable{
+    private static final long serialVersionUID = 1L;
     private int cedula;
     private String nombre;
     private String apellido;

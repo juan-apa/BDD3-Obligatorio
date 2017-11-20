@@ -66,11 +66,6 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
         } catch (IllegalAccessException ex) {
             throw new ExceptionFabrica(ExceptionFabrica.ERROR_CREAR_FABRICA);
         }
-        
-        
-        
-        this.ninios = new DAONinios();
-        this.ipc = new PoolConexiones();
     }
 
     /*Ingresa un nuevo niño al sistema, chequeando que no existiera. */
