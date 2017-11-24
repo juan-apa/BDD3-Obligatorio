@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package persistencia;
 
 import logica.excepciones.ExceptionPersistencia;
@@ -16,7 +15,7 @@ import persistencia.daos.IDAONinios;
  *
  * @author Juan Aparicio
  */
-public class FabricaArchivo implements FabricaAbstracta{
+public class FabricaArchivo implements FabricaAbstracta {
 
     @Override
     public IDAONinios crearIDAONinios() throws ExceptionPersistencia {
@@ -32,7 +31,5 @@ public class FabricaArchivo implements FabricaAbstracta{
     public IPoolConexiones crearIPoolConexiones() throws ExceptionPersistencia {
         return new PoolConexionArchivo();
     }
-    
-    
-    
+
 }

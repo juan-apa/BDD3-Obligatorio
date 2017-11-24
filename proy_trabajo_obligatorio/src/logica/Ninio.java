@@ -54,6 +54,10 @@ public class Ninio implements Serializable{
         this.apellido = apellido;
     }
     
+    public IDAOJuguetes getJuguetes(){
+        return this.juguetes;
+    }
+    
     public boolean tieneJuguete(int numJ, IConexion ic) throws ExceptionPersistencia{
         boolean ret = false;
         if(this.juguetes.largo(ic) > numJ){

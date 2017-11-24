@@ -62,7 +62,6 @@ public class ModeloTabla<T> extends javax.swing.table.AbstractTableModel {
     public Object getValueAt(int i, int i1) {
         VObject vo = (VObject) datos.toArray()[i];
         String val = vo.toArray()[i1];
-        System.out.println(val);
         return val;
     }
 

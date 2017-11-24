@@ -13,19 +13,14 @@ import java.rmi.server.UnicastRemoteObject;
 import logica.valueObjects.VONinio;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logica.excepciones.ExceptionFabrica;
 import logica.excepciones.ExceptionJuguete;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
 import persistencia.IConexion;
 import persistencia.IPoolConexiones;
-import persistencia.PoolConexiones;
 import logica.valueObjects.VOJuguete;
 import persistencia.FabricaAbstracta;
-import persistencia.daos.DAOJuguetes;
-import persistencia.daos.DAONinios;
 import persistencia.daos.IDAONinios;
 
 /**
@@ -72,11 +67,10 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
     public void nuevoNinio(VONinio von) throws ExceptionPersistencia, ExceptionNinio, RemoteException {
         IConexion ic = this.ipc.obtenerConexion(true);
         try {
-            if(! this.ninios.member(von.getCedula(), ic)){
+            if (!this.ninios.member(von.getCedula(), ic)) {
                 Ninio insert = new Ninio(von.getCedula(), von.getNombre(), von.getApellido(), this.fabrica.crearIDAOJuguetes(von.getCedula()));
                 this.ninios.insert(insert, ic);
-            }
-            else{
+            } else {
                 throw new ExceptionNinio(ExceptionNinio.EXISTE_NINIO);
             }
             this.ipc.liberarConexion(ic, true);
@@ -93,11 +87,10 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
     public void nuevoJuguete(String desc, int cedN) throws ExceptionPersistencia, ExceptionNinio, RemoteException {
         IConexion ic = this.ipc.obtenerConexion(true);
         try {
-            if(this.ninios.member(cedN, ic)){
+            if (this.ninios.member(cedN, ic)) {
                 Ninio n = this.ninios.find(cedN, ic);
                 n.insertJuguete(new Juguete(n.cantidadJuguetes(ic), desc), ic);
-            }
-            else {
+            } else {
                 throw new ExceptionNinio(ExceptionNinio.NO_EXISTE_NINIO);
             }
             this.ipc.liberarConexion(ic, true);
@@ -105,7 +98,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
             this.ipc.liberarConexion(ic, false);
             throw e;
         }
-        
+
     }
 
     /*Devuelve un listado de todos los niños registrados, ordenado por cédula. */
@@ -129,10 +122,9 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
         IConexion ic = this.ipc.obtenerConexion(false);
         List<VOJuguete> ret = null;
         try {
-            if(this.ninios.member(cedN, ic)){
+            if (this.ninios.member(cedN, ic)) {
                 ret = this.ninios.find(cedN, ic).listarJuguetes(ic);
-            }
-            else{
+            } else {
                 throw new ExceptionNinio(ExceptionNinio.NO_EXISTE_NINIO);
             }
             this.ipc.liberarConexion(ic, true);
@@ -150,16 +142,14 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
         IConexion ic = this.ipc.obtenerConexion(false);
         String ret = new String();
         try {
-            if(this.ninios.member(cedN, ic)){
+            if (this.ninios.member(cedN, ic)) {
                 Ninio n = this.ninios.find(cedN, ic);
-                if(n.cantidadJuguetes(ic) > numJ){
+                if (n.cantidadJuguetes(ic) > numJ) {
                     ret = n.obtenerJuguete(numJ, ic).getDescripcion();
-                }
-                else {
+                } else {
                     throw new ExceptionJuguete(ExceptionJuguete.NO_EXISTE_JUGUETE);
                 }
-            }
-            else {
+            } else {
                 throw new ExceptionNinio(ExceptionNinio.NO_EXISTE_NINIO);
             }
             this.ipc.liberarConexion(ic, true);
@@ -175,7 +165,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
     public void borrarNinioJuguetes(int cedN) throws ExceptionPersistencia, ExceptionNinio, RemoteException {
         IConexion ic = this.ipc.obtenerConexion(true);
         try {
-            if(this.ninios.member(cedN, ic)){
+            if (this.ninios.member(cedN, ic)) {
                 this.ninios.delete(cedN, ic);
             } else {
                 throw new ExceptionNinio(ExceptionNinio.NO_EXISTE_NINIO);

@@ -17,7 +17,7 @@ import logica.excepciones.ExceptionPersistencia;
  *
  * @author Juan Aparicio
  */
-public class PoolConexiones implements IPoolConexiones{
+public class PoolConexiones implements IPoolConexiones {
 
     private String driver;
     private String url;

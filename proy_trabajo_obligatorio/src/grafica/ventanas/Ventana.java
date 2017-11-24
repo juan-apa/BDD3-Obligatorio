@@ -26,6 +26,7 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
         this.parentWindow = null;
         initComponents();
+        setResizable(false);
     }
 
     /**

@@ -16,8 +16,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logica.Ninio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VONinio;
@@ -113,6 +111,8 @@ public class DAONiniosArchivo implements IDAONinios, Serializable{
        for (File archNinio : this.folder.listFiles()){
            String nombreArchivo = archNinio.getName();
            if(nombreArchivo.contains("ninios-"+String.valueOf(cedulaNinio)+".txt")){
+               Ninio n = this.leerNinioDeArchivo(archNinio.getPath());
+               n.getJuguetes().borrarJuguetes(ic);
                archNinio.delete();
            }
        }
@@ -122,13 +122,10 @@ public class DAONiniosArchivo implements IDAONinios, Serializable{
     public List<VONinio> listarNinios(IConexion ic) throws ExceptionPersistencia {
         //ConexionArchivo con = (ConexionArchivo) ic;
         ArrayList<VONinio> listado = new ArrayList<>();
-        System.out.println("UNO");
         for (File archNinio: this.folder.listFiles()){
             String nombreArch = archNinio.getName();
-            System.out.println("DOS");
             if(nombreArch.contains("ninios-")){
                 Ninio n = leerNinioDeArchivo(archNinio.getPath());
-                System.out.println("TRES");
                 VONinio aux = new VONinio(n.getCedula(), n.getNombre(), n.getApellido());
                 listado.add(aux); 
            }
@@ -145,7 +142,6 @@ public class DAONiniosArchivo implements IDAONinios, Serializable{
             Arch = new FileInputStream(archivo);
             flujo = new ObjectInputStream(Arch);
             ret = (Ninio) flujo.readObject();
-            System.out.println("DOS DOS");
         } catch (FileNotFoundException ex) {
              throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         } catch (IOException ex) {

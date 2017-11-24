@@ -22,7 +22,7 @@ import persistencia.consultas.Consultas;
  *
  * @author Juan Aparicio
  */
-public class DAONinios implements IDAONinios{
+public class DAONinios implements IDAONinios {
 
     public DAONinios() throws ExceptionPersistencia {
     }
@@ -138,6 +138,5 @@ public class DAONinios implements IDAONinios{
         /*Devuelvo el resultado*/
         return ret;
     }
-    
-    
+
 }

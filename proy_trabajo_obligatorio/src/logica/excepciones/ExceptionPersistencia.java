@@ -61,8 +61,8 @@ public class ExceptionPersistencia extends Exception {
     public ExceptionPersistencia(Throwable thrwbl) {
         super(thrwbl);
     }
-    
-    public static String obtenerMensaje(int errorCode){
+
+    public static String obtenerMensaje(int errorCode) {
         return MENSAJES_ERROR[errorCode];
     }
 

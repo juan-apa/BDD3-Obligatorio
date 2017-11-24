@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package logica.excepciones;
 
 /**
  *
  * @author Juan Aparicio
  */
-public class ExceptionFabrica extends Exception{
+public class ExceptionFabrica extends Exception {
+
     public static final int ERROR_CREAR_FABRICA = 0;
-    
+
     private static final String[] MENSAJES_ERROR = {
         "Error al crear una nueva instancia de la fabrica."
     };
-    
+
     public ExceptionFabrica() {
     }
 
@@ -35,8 +35,8 @@ public class ExceptionFabrica extends Exception{
     public ExceptionFabrica(Throwable thrwbl) {
         super(thrwbl);
     }
-    
-    public static String obtenerMensaje(int errorCode){
+
+    public static String obtenerMensaje(int errorCode) {
         return MENSAJES_ERROR[errorCode];
     }
 }

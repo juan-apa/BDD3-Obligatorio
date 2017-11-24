@@ -22,8 +22,8 @@ import persistencia.consultas.Consultas;
  *
  * @author Juan Aparicio
  */
-public class DAOJuguetes implements IDAOJuguetes{
-    
+public class DAOJuguetes implements IDAOJuguetes {
+
     private int cedulaNinio;
 
     public DAOJuguetes(int cedulaNinio) throws ExceptionPersistencia {

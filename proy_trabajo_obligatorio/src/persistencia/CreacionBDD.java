@@ -37,7 +37,7 @@ public class CreacionBDD {
         } catch (IOException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.ABRIR_PROPERTIES);
         }
-   
+
         String url = p.getProperty("url");
         String driver = p.getProperty("driver");
         String user = p.getProperty("user");

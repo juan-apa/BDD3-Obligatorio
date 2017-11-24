@@ -18,6 +18,6 @@ public interface FabricaAbstracta {
     public IDAONinios crearIDAONinios() throws ExceptionPersistencia;
 
     public IDAOJuguetes crearIDAOJuguetes(int cedulaNinio) throws ExceptionPersistencia;
-    
+
     public IPoolConexiones crearIPoolConexiones() throws ExceptionPersistencia;
 }

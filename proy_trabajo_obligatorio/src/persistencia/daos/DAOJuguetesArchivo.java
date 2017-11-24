@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package persistencia.daos;
 
 import java.io.File;
@@ -14,15 +13,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logica.Juguete;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
-import persistencia.Conexion;
 import persistencia.ConexionArchivo;
 import persistencia.IConexion;
 
@@ -30,50 +25,49 @@ import persistencia.IConexion;
  *
  * @author Juan Aparicio
  */
-public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
+public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable {
+
     private static final long serialVersionUID = 1L;
     private int cedulaNinio;
     private File folder;
-    
-    public DAOJuguetesArchivo(int cedulaNinio){
+
+    public DAOJuguetesArchivo(int cedulaNinio) {
         this.cedulaNinio = cedulaNinio;
-        this.folder = new File(System.getProperty("user.dir")+"/.resources/archivos");
+        this.folder = new File(System.getProperty("user.dir") + "/.resources/archivos");
     }
-    
+
     @Override
     public void insback(Juguete juguete, IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
-        
+
         ArrayList<Juguete> arr = new ArrayList<>();
-        String archivo = this.folder.getPath()+"/juguetes-"+this.cedulaNinio+".txt";
-        try{
-            String nombreArchivo = "juguetes-"+this.cedulaNinio+".txt"; //nuevo
-            if (this.existeArchivo(nombreArchivo)){
+        String archivo = this.folder.getPath() + "/juguetes-" + this.cedulaNinio + ".txt";
+        try {
+            String nombreArchivo = "juguetes-" + this.cedulaNinio + ".txt"; //nuevo
+            if (this.existeArchivo(nombreArchivo)) {
                 arr = this.leerJugueteDeArchivo(archivo);
                 arr.add(juguete);
-            }
-            else{
+            } else {
                 arr.add(juguete);
             }
             this.escribirJugueteArchivo(arr);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }
 
     @Override
     public int largo(IConexion ic) throws ExceptionPersistencia {
-        
+
         ConexionArchivo con = (ConexionArchivo) ic;
         int largo = 0;
-        
-        String nombreArch = this.folder.getPath()+"/juguetes-"+this.cedulaNinio+".txt";
-        String nombreArchivo = "juguetes-"+this.cedulaNinio+".txt";
-        if(this.existeArchivo(nombreArchivo)){
-            
+
+        String nombreArch = this.folder.getPath() + "/juguetes-" + this.cedulaNinio + ".txt";
+        String nombreArchivo = "juguetes-" + this.cedulaNinio + ".txt";
+        if (this.existeArchivo(nombreArchivo)) {
+
             ArrayList<Juguete> arr = this.leerJugueteDeArchivo(nombreArch);
-            System.out.println(arr.toString());
             largo = arr.size();
         }
         return largo;
@@ -83,12 +77,12 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
     public Juguete k_esimo(int numeroJuguete, IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
         Juguete kesimo = null;
-        
+
         /*Recorro los archivos en el directorio, abro los jugutes, los cargo en un 
         juguete auxiliar y me fijo el número. Si el número es el deseado, lo devuelvo.*/
-        for(File archJuguete : this.folder.listFiles()){
+        for (File archJuguete : this.folder.listFiles()) {
             String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio))){
+            if (nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio))) {
                 ArrayList<Juguete> aux = this.leerJugueteDeArchivo(archJuguete.getPath());
                 kesimo = aux.get(numeroJuguete);
             }
@@ -100,12 +94,12 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
     public List<VOJuguete> listarJuguetes(IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
         ArrayList<VOJuguete> ret = new ArrayList<>();
-        
-        for(File archJuguete : this.folder.listFiles()){
+
+        for (File archJuguete : this.folder.listFiles()) {
             String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio)+".txt")){
+            if (nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio) + ".txt")) {
                 ArrayList<Juguete> aux = this.leerJugueteDeArchivo(archJuguete.getPath());
-                for (Juguete j : aux){
+                for (Juguete j : aux) {
                     ret.add(new VOJuguete(j.getNumero(), j.getDescripcion(), this.cedulaNinio));
                 }
             }
@@ -116,27 +110,25 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
     @Override
     public void borrarJuguetes(IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
-        System.out.println("LLEGUE");
-        for(File archJuguete : this.folder.listFiles()){
+        for (File archJuguete : this.folder.listFiles()) {
             String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio)+".txt")){
+            if (nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio) + ".txt")) {
                 archJuguete.delete();
             }
         }
     }
-    
-    private ArrayList<Juguete> leerJugueteDeArchivo(String archivo) throws ExceptionPersistencia{
+
+    private ArrayList<Juguete> leerJugueteDeArchivo(String archivo) throws ExceptionPersistencia {
         ArrayList<Juguete> listado = new ArrayList<>();
         FileInputStream Arch = null;
         ObjectInputStream flujo = null;
         try {
-            //System.out.println("UNO: " + archivo);
             Arch = new FileInputStream(archivo);
-            
+
             flujo = new ObjectInputStream(Arch);
-            
+
             listado = (ArrayList<Juguete>) flujo.readObject();
-            
+
         } catch (FileNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         } catch (IOException ex) {
@@ -144,14 +136,14 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
         } catch (ClassNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         } finally {
-            if(flujo != null){
+            if (flujo != null) {
                 try {
                     flujo.close();
                 } catch (IOException ex) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
                 }
             }
-            if(Arch != null){
+            if (Arch != null) {
                 try {
                     Arch.close();
                 } catch (IOException ex) {
@@ -159,15 +151,12 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
                 }
             }
         }
-        
+
         return listado;
     }
-    
-    private void escribirJugueteArchivo(ArrayList<Juguete> arr) throws ExceptionPersistencia{
-        try{
-            for(int i=0; i<arr.size();i++){
-                System.out.println(arr.get(i).getDescripcion());
-            }
+
+    private void escribirJugueteArchivo(ArrayList<Juguete> arr) throws ExceptionPersistencia {
+        try {
             String archivo = this.folder.getPath() + "/juguetes-" + this.cedulaNinio + ".txt";
             FileOutputStream Arch = new FileOutputStream(archivo);
             ObjectOutputStream flujo = new ObjectOutputStream(Arch);
@@ -179,19 +168,18 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
         } catch (IOException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         }
-        
+
     }
-    
-    private boolean existeArchivo(String nombreArch){
+
+    private boolean existeArchivo(String nombreArch) {
         boolean existe = false;
-        for(File archJuguete : this.folder.listFiles()){
+        for (File archJuguete : this.folder.listFiles()) {
             String aux = archJuguete.getName();
-            if(aux.contains(nombreArch)){
+            if (aux.contains(nombreArch)) {
                 existe = true;
             }
         }
         return existe;
     }
-    
 
 }

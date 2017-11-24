@@ -13,7 +13,7 @@ public class ExceptionRMI extends Exception {
 
     public static final int ESTABLECER_CONEXION = 0;
     public static final int PUBLICAR_OBJETO = 1;
-    
+
     private static final String[] MENSAJES_ERROR = {
         "Error al establer la conexión con el servidor.",
         "Error al montar el objeto en red para ser accedido por RMI."
@@ -37,8 +37,8 @@ public class ExceptionRMI extends Exception {
     public ExceptionRMI(Throwable thrwbl) {
         super(thrwbl);
     }
-    
-    public static String obtenerMensaje(int errorCode){
+
+    public static String obtenerMensaje(int errorCode) {
         return MENSAJES_ERROR[errorCode];
     }
 

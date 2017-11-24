@@ -9,8 +9,6 @@ import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
