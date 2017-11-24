@@ -28,15 +28,14 @@ public class ControllerInsertJuguete extends Controladora {
             int ced = Integer.parseInt(cedulaNinio);
             this.getFachada().nuevoJuguete(descripcion, ced);
             ((Ventana) this.getVentana()).mostrarMensaje("Juguete ingresado con éxito", Ventana.SUCCESS);
-        } catch (Exception e){
-                e.printStackTrace();
-        }/*
+        } catch (NumberFormatException e) {
+            ((Ventana) this.getVentana()).mostrarMensaje("El cámpo cédula tiene que ser numérico.", Ventana.WARNING);
         } catch (ExceptionPersistencia ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (ExceptionNinio ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
-        }*/
+        }
     }
 }
