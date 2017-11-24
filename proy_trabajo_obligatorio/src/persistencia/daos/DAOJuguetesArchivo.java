@@ -43,29 +43,38 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
     @Override
     public void insback(Juguete juguete, IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
+        
+        ArrayList<Juguete> arr = new ArrayList<>();
+        String archivo = this.folder.getPath()+"/juguetes-"+this.cedulaNinio+".txt";
         try{
-            String archivo = this.folder.getPath() + "juguetes - " + this.cedulaNinio + ".txt";
-            FileOutputStream Arch = new FileOutputStream(archivo);
-            ObjectOutputStream flujo = new ObjectOutputStream(Arch);
-            flujo.writeObject(juguete);
-            flujo.close();
-            Arch.close();
-        } catch (FileNotFoundException ex) {
-            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
-        } catch (IOException ex) {
-            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+            String nombreArchivo = "juguetes-"+this.cedulaNinio+".txt"; //nuevo
+            if (this.existeArchivo(nombreArchivo)){
+                arr = this.leerJugueteDeArchivo(archivo);
+                arr.add(juguete);
+            }
+            else{
+                arr.add(juguete);
+            }
+            this.escribirJugueteArchivo(arr);
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        
     }
 
     @Override
     public int largo(IConexion ic) throws ExceptionPersistencia {
+        
         ConexionArchivo con = (ConexionArchivo) ic;
         int largo = 0;
-        for(File archJuguete : this.folder.listFiles()){
-            String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("jugutes - " + String.valueOf(this.cedulaNinio))){
-                largo ++;
-            }
+        
+        String nombreArch = this.folder.getPath()+"/juguetes-"+this.cedulaNinio+".txt";
+        String nombreArchivo = "juguetes-"+this.cedulaNinio+".txt";
+        if(this.existeArchivo(nombreArchivo)){
+            
+            ArrayList<Juguete> arr = this.leerJugueteDeArchivo(nombreArch);
+            System.out.println(arr.toString());
+            largo = arr.size();
         }
         return largo;
     }
@@ -73,18 +82,15 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
     @Override
     public Juguete k_esimo(int numeroJuguete, IConexion ic) throws ExceptionPersistencia {
         ConexionArchivo con = (ConexionArchivo) ic;
-//        ArrayList<File> archivosJuguetes = new ArrayList<>();
         Juguete kesimo = null;
         
         /*Recorro los archivos en el directorio, abro los jugutes, los cargo en un 
         juguete auxiliar y me fijo el número. Si el número es el deseado, lo devuelvo.*/
         for(File archJuguete : this.folder.listFiles()){
             String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("jugutes - " + String.valueOf(this.cedulaNinio))){
-                Juguete aux = this.leerJugueteDeArchivo(archJuguete.getPath());
-                if(aux.getNumero() == numeroJuguete){
-                    kesimo = aux;
-                }
+            if(nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio))){
+                ArrayList<Juguete> aux = this.leerJugueteDeArchivo(archJuguete.getPath());
+                kesimo = aux.get(numeroJuguete);
             }
         }
         return kesimo;
@@ -92,35 +98,45 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
 
     @Override
     public List<VOJuguete> listarJuguetes(IConexion ic) throws ExceptionPersistencia {
-        ArrayList<VOJuguete> listado = new ArrayList<>();
+        ConexionArchivo con = (ConexionArchivo) ic;
+        ArrayList<VOJuguete> ret = new ArrayList<>();
+        
         for(File archJuguete : this.folder.listFiles()){
             String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("jugutes - " + String.valueOf(this.cedulaNinio))){
-                Juguete aux = this.leerJugueteDeArchivo(archJuguete.getPath());
-                listado.add(new VOJuguete(aux.getNumero(), aux.getDescripcion(), this.cedulaNinio));
+            if(nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio)+".txt")){
+                ArrayList<Juguete> aux = this.leerJugueteDeArchivo(archJuguete.getPath());
+                for (Juguete j : aux){
+                    ret.add(new VOJuguete(j.getNumero(), j.getDescripcion(), this.cedulaNinio));
+                }
             }
         }
-        return listado;
+        return ret;
     }
 
     @Override
     public void borrarJuguetes(IConexion ic) throws ExceptionPersistencia {
+        ConexionArchivo con = (ConexionArchivo) ic;
+        System.out.println("LLEGUE");
         for(File archJuguete : this.folder.listFiles()){
             String nombreArch = archJuguete.getName();
-            if(nombreArch.contains("jugutes - " + String.valueOf(this.cedulaNinio))){
+            if(nombreArch.contains("juguetes-" + String.valueOf(this.cedulaNinio)+".txt")){
                 archJuguete.delete();
             }
         }
     }
     
-    private Juguete leerJugueteDeArchivo(String archivo) throws ExceptionPersistencia{
-        Juguete ret = null;
+    private ArrayList<Juguete> leerJugueteDeArchivo(String archivo) throws ExceptionPersistencia{
+        ArrayList<Juguete> listado = new ArrayList<>();
         FileInputStream Arch = null;
         ObjectInputStream flujo = null;
         try {
+            //System.out.println("UNO: " + archivo);
             Arch = new FileInputStream(archivo);
+            
             flujo = new ObjectInputStream(Arch);
-            ret = (Juguete) flujo.readObject();
+            
+            listado = (ArrayList<Juguete>) flujo.readObject();
+            
         } catch (FileNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         } catch (IOException ex) {
@@ -143,7 +159,39 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable{
                 }
             }
         }
-        return ret;
+        
+        return listado;
     }
+    
+    private void escribirJugueteArchivo(ArrayList<Juguete> arr) throws ExceptionPersistencia{
+        try{
+            for(int i=0; i<arr.size();i++){
+                System.out.println(arr.get(i).getDescripcion());
+            }
+            String archivo = this.folder.getPath() + "/juguetes-" + this.cedulaNinio + ".txt";
+            FileOutputStream Arch = new FileOutputStream(archivo);
+            ObjectOutputStream flujo = new ObjectOutputStream(Arch);
+            flujo.writeObject(arr);
+            flujo.close();
+            Arch.close();
+        } catch (FileNotFoundException ex) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+        } catch (IOException ex) {
+            throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+        }
+        
+    }
+    
+    private boolean existeArchivo(String nombreArch){
+        boolean existe = false;
+        for(File archJuguete : this.folder.listFiles()){
+            String aux = archJuguete.getName();
+            if(aux.contains(nombreArch)){
+                existe = true;
+            }
+        }
+        return existe;
+    }
+    
 
 }
