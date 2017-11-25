@@ -10,10 +10,9 @@ import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import logica.excepciones.ExceptionPersistencia;
+import logica.excepciones.ExceptionRMI;
 import logica.valueObjects.VONinio;
 
 /**
@@ -33,7 +32,7 @@ public class ControllerListarNinios extends Controladora {
         } catch (ExceptionPersistencia ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {
-            ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
+            ((Ventana) this.getVentana()).mostrarMensaje(ExceptionRMI.obtenerMensaje(ExceptionRMI.ESTABLECER_CONEXION), Ventana.ERROR);
         }
         return ret;
     }

@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
+import logica.excepciones.ExceptionRMI;
 import logica.valueObjects.VOJuguete;
 
 /**
@@ -34,7 +35,7 @@ public class ControllerListarJuguetes extends Controladora {
         } catch (ExceptionNinio ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {
-            ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
+            ((Ventana) this.getVentana()).mostrarMensaje(ExceptionRMI.obtenerMensaje(ExceptionRMI.ESTABLECER_CONEXION), Ventana.ERROR);
         } catch (NumberFormatException ex) {
             ((Ventana) this.getVentana()).mostrarMensaje("El campo cédula tiene que ser numérico.", Ventana.ERROR);
         }

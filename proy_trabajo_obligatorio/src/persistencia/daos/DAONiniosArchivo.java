@@ -16,6 +16,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logica.Ninio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VONinio;
@@ -100,6 +102,22 @@ public class DAONiniosArchivo implements IDAONinios, Serializable{
                 } catch (ClassNotFoundException ex) {
                     throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
                 }
+                finally{
+                    try{
+                        if(flujo != null){
+                            flujo.close();
+                        }
+                    } catch (IOException ex) {
+                        throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+                    }
+                    try{
+                        if(Arch != null){
+                            Arch.close();
+                        }
+                    } catch (IOException ex) {
+                        throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+                    }
+                }
             }
         }
         return ret;
@@ -112,8 +130,12 @@ public class DAONiniosArchivo implements IDAONinios, Serializable{
            String nombreArchivo = archNinio.getName();
            if(nombreArchivo.contains("ninios-"+String.valueOf(cedulaNinio)+".txt")){
                Ninio n = this.leerNinioDeArchivo(archNinio.getPath());
+               System.out.println("despues de leer ninio de archivo");
                n.getJuguetes().borrarJuguetes(ic);
-               archNinio.delete();
+               System.out.println("despues de borrar juguetes.");
+               System.out.println("archNinio: " + archNinio.getPath());
+               boolean borrado = archNinio.delete();
+               System.out.println("despues de delete: " + borrado);
            }
        }
     }

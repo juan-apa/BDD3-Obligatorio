@@ -7,11 +7,10 @@ package grafica.controladoras;
 
 import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
+import logica.excepciones.ExceptionRMI;
 
 /**
  *
@@ -33,7 +32,7 @@ public class ControllerBorrarNinioJuguete extends Controladora {
         } catch (ExceptionNinio ex) {
             ((Ventana) super.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {
-            ((Ventana) super.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
+            ((Ventana) super.getVentana()).mostrarMensaje(ExceptionRMI.obtenerMensaje(ExceptionRMI.ESTABLECER_CONEXION), Ventana.ERROR);
         } catch (NumberFormatException ex) {
             ((Ventana) super.getVentana()).mostrarMensaje("El campo cedula tiene que ser numérico.", Ventana.ERROR);
         }

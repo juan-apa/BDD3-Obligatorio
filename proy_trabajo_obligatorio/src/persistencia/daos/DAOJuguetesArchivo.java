@@ -15,6 +15,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logica.Juguete;
 import logica.excepciones.ExceptionPersistencia;
 import logica.valueObjects.VOJuguete;
@@ -46,10 +48,8 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable {
             String nombreArchivo = "juguetes-" + this.cedulaNinio + ".txt"; //nuevo
             if (this.existeArchivo(nombreArchivo)) {
                 arr = this.leerJugueteDeArchivo(archivo);
-                arr.add(juguete);
-            } else {
-                arr.add(juguete);
             }
+            arr.add(juguete);
             this.escribirJugueteArchivo(arr);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +66,6 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable {
         String nombreArch = this.folder.getPath() + "/juguetes-" + this.cedulaNinio + ".txt";
         String nombreArchivo = "juguetes-" + this.cedulaNinio + ".txt";
         if (this.existeArchivo(nombreArchivo)) {
-
             ArrayList<Juguete> arr = this.leerJugueteDeArchivo(nombreArch);
             largo = arr.size();
         }
@@ -109,6 +108,7 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable {
 
     @Override
     public void borrarJuguetes(IConexion ic) throws ExceptionPersistencia {
+        System.out.println("llegue");
         ConexionArchivo con = (ConexionArchivo) ic;
         for (File archJuguete : this.folder.listFiles()) {
             String nombreArch = archJuguete.getName();
@@ -124,11 +124,8 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable {
         ObjectInputStream flujo = null;
         try {
             Arch = new FileInputStream(archivo);
-
             flujo = new ObjectInputStream(Arch);
-
             listado = (ArrayList<Juguete>) flujo.readObject();
-
         } catch (FileNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         } catch (IOException ex) {
@@ -156,17 +153,32 @@ public class DAOJuguetesArchivo implements IDAOJuguetes, Serializable {
     }
 
     private void escribirJugueteArchivo(ArrayList<Juguete> arr) throws ExceptionPersistencia {
+        FileOutputStream Arch = null;
+        ObjectOutputStream flujo = null;
         try {
             String archivo = this.folder.getPath() + "/juguetes-" + this.cedulaNinio + ".txt";
-            FileOutputStream Arch = new FileOutputStream(archivo);
-            ObjectOutputStream flujo = new ObjectOutputStream(Arch);
+            Arch = new FileOutputStream(archivo);
+            flujo = new ObjectOutputStream(Arch);
             flujo.writeObject(arr);
-            flujo.close();
-            Arch.close();
+            
         } catch (FileNotFoundException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
         } catch (IOException ex) {
             throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+        }
+        finally{
+            try {
+                if(flujo != null)
+                    flujo.close();
+            } catch (IOException ex) {
+                throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+            }
+            try {
+                if(Arch != null)
+                    Arch.close();
+            } catch (IOException ex) {
+                throw new ExceptionPersistencia(ExceptionPersistencia.OBTENER_DATOS);
+            }
         }
 
     }

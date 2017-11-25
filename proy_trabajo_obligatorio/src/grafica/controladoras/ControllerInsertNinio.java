@@ -7,11 +7,10 @@ package grafica.controladoras;
 
 import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
+import logica.excepciones.ExceptionRMI;
 import logica.valueObjects.VONinio;
 
 /**
@@ -39,7 +38,7 @@ public class ControllerInsertNinio extends Controladora {
                 } catch (ExceptionNinio ex) {
                     ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
                 } catch (RemoteException ex) {
-                    Logger.getLogger(ControllerInsertNinio.class.getName()).log(Level.SEVERE, null, ex);
+                    ((Ventana) this.getVentana()).mostrarMensaje(ExceptionRMI.obtenerMensaje(ExceptionRMI.ESTABLECER_CONEXION), Ventana.ERROR);
                 } 
             } else {
                 ((Ventana) this.getVentana()).mostrarMensaje("El campo cédula no tiene formato numérico.", 0);

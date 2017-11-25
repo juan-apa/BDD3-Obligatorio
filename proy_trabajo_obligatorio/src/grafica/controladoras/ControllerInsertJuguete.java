@@ -7,11 +7,10 @@ package grafica.controladoras;
 
 import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
+import logica.excepciones.ExceptionRMI;
 
 /**
  *
@@ -28,15 +27,14 @@ public class ControllerInsertJuguete extends Controladora {
             int ced = Integer.parseInt(cedulaNinio);
             this.getFachada().nuevoJuguete(descripcion, ced);
             ((Ventana) this.getVentana()).mostrarMensaje("Juguete ingresado con éxito", Ventana.SUCCESS);
-        } catch (Exception e){
-                e.printStackTrace();
-        }/*
         } catch (ExceptionPersistencia ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (ExceptionNinio ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {
-            ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
-        }*/
+            ((Ventana) this.getVentana()).mostrarMensaje(ExceptionRMI.obtenerMensaje(ExceptionRMI.ESTABLECER_CONEXION), Ventana.ERROR);
+        } catch (NumberFormatException ex){
+            ((Ventana) this.getVentana()).mostrarMensaje("El campo cédula tiene que tener formato numérico.", Ventana.ERROR);
+        }
     }
 }

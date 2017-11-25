@@ -12,6 +12,7 @@ import logica.Fachada;
 import logica.excepciones.ExceptionJuguete;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
+import logica.excepciones.ExceptionRMI;
 
 /**
  *
@@ -38,7 +39,7 @@ public class ControllerDarDescripcion extends Controladora {
         } catch (ExceptionJuguete ex) {
             ((Ventana) super.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {
-            ((Ventana) super.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
+            ((Ventana) super.getVentana()).mostrarMensaje(ExceptionRMI.obtenerMensaje(ExceptionRMI.ESTABLECER_CONEXION), Ventana.ERROR);
         } catch (NumberFormatException ex) {
             ((Ventana) super.getVentana()).mostrarMensaje("Los campos cedula y número tienen que ser numéricos.", Ventana.WARNING);
         }

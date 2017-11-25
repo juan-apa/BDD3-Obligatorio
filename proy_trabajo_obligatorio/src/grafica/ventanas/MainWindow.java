@@ -172,6 +172,9 @@ public class MainWindow extends javax.swing.JFrame {
             ins_nin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) ins_nin).setParentWindow(this);
         }
+        else{
+            ins_nin.toFront();
+        }
     }//GEN-LAST:event_btn_ins_ninActionPerformed
 
     private void btn_ins_jugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_jugActionPerformed
@@ -180,6 +183,9 @@ public class MainWindow extends javax.swing.JFrame {
             ins_jug.setVisible(true);
             ins_jug.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) ins_jug).setParentWindow(this);
+        }
+        else{
+            ins_jug.toFront();
         }
     }//GEN-LAST:event_btn_ins_jugActionPerformed
 
@@ -190,6 +196,9 @@ public class MainWindow extends javax.swing.JFrame {
             list_nin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) list_nin).setParentWindow(this);
         }
+        else{
+            list_nin.toFront();
+        }
     }//GEN-LAST:event_btn_list_ninActionPerformed
 
     private void btn_list_jugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_list_jugActionPerformed
@@ -198,6 +207,9 @@ public class MainWindow extends javax.swing.JFrame {
             list_jug.setVisible(true);
             list_jug.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) list_jug).setParentWindow(this);
+        }
+        else{
+            list_jug.toFront();
         }
     }//GEN-LAST:event_btn_list_jugActionPerformed
 
@@ -208,6 +220,9 @@ public class MainWindow extends javax.swing.JFrame {
             dar_desc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) dar_desc).setParentWindow(this);
         }
+        else{
+            dar_desc.toFront();
+        }
     }//GEN-LAST:event_btn_dar_descActionPerformed
 
     private void btn_del_nin_jugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_del_nin_jugActionPerformed
@@ -216,6 +231,9 @@ public class MainWindow extends javax.swing.JFrame {
             del_nin_jug.setVisible(true);
             del_nin_jug.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ((Ventana) del_nin_jug).setParentWindow(this);
+        }
+        else{
+            del_nin_jug.toFront();
         }
     }//GEN-LAST:event_btn_del_nin_jugActionPerformed
 
