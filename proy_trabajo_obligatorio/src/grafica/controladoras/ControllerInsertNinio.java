@@ -8,6 +8,7 @@ package grafica.controladoras;
 import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
 import javax.swing.JFrame;
+import logica.IFachada;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.excepciones.ExceptionRMI;
@@ -31,8 +32,13 @@ public class ControllerInsertNinio extends Controladora {
 
             if (Controladora.numerico(String.valueOf(von.getCedula()))) {
                 try {
-                    this.getFachada().nuevoNinio(von);
-                    ((Ventana) this.getVentana()).mostrarMensaje("Niño ingresado con éxito.", Ventana.SUCCESS);
+                    IFachada f = super.getFachada();
+                    if(f != null){
+                        f.nuevoNinio(von);
+                        ((Ventana) this.getVentana()).mostrarMensaje("Niño ingresado con éxito.", Ventana.SUCCESS);
+                    }else{
+                        throw new RemoteException();
+                    }
                 } catch (ExceptionPersistencia ex) {
                     ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
                 } catch (ExceptionNinio ex) {

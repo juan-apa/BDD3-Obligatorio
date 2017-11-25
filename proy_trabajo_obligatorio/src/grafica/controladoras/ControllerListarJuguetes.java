@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import logica.IFachada;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.excepciones.ExceptionRMI;
@@ -29,7 +30,13 @@ public class ControllerListarJuguetes extends Controladora {
         List<VOJuguete> ret = new ArrayList<VOJuguete>();
         try {
             int cedNum = Integer.parseInt(ced);
-            ret = this.getFachada().listarJuguetes(cedNum);
+            IFachada f = super.getFachada();
+            if(f != null){
+                ret = f.listarJuguetes(cedNum);
+            }
+            else{
+                throw new RemoteException();
+            }
         } catch (ExceptionPersistencia ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (ExceptionNinio ex) {

@@ -8,6 +8,7 @@ package grafica.controladoras;
 import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
 import javax.swing.JFrame;
+import logica.IFachada;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
 import logica.excepciones.ExceptionRMI;
@@ -25,8 +26,14 @@ public class ControllerBorrarNinioJuguete extends Controladora {
     public void borrarNiniosYJuguetes(String cedulaNinio) {
         try {
             int cedula = Integer.parseInt(cedulaNinio);
-            super.getFachada().borrarNinioJuguetes(cedula);
-            ((Ventana) super.getVentana()).mostrarMensaje("El niño y sus juguetes fueron borrados con éxito.", Ventana.SUCCESS);
+            IFachada f =  super.getFachada();
+            if(f != null){
+                f.borrarNinioJuguetes(cedula);
+                ((Ventana) super.getVentana()).mostrarMensaje("El niño y sus juguetes fueron borrados con éxito.", Ventana.SUCCESS);
+            }
+            else{
+                throw new RemoteException();
+            }
         } catch (ExceptionPersistencia ex) {
             ((Ventana) super.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (ExceptionNinio ex) {

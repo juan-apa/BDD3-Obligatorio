@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import logica.IFachada;
 import logica.excepciones.ExceptionPersistencia;
 import logica.excepciones.ExceptionRMI;
 import logica.valueObjects.VONinio;
@@ -28,7 +29,13 @@ public class ControllerListarNinios extends Controladora {
     public List<VONinio> listarNinios() {
         List<VONinio> ret = new ArrayList<>();
         try {
-            ret = this.getFachada().listarNinios();
+            IFachada f = super.getFachada();
+            if(f != null){
+                ret = f.listarNinios();
+            }
+            else{
+                throw new RemoteException();
+            }
         } catch (ExceptionPersistencia ex) {
             ((Ventana) this.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (RemoteException ex) {

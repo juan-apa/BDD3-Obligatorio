@@ -9,6 +9,7 @@ import grafica.ventanas.Ventana;
 import java.rmi.RemoteException;
 import javax.swing.JFrame;
 import logica.Fachada;
+import logica.IFachada;
 import logica.excepciones.ExceptionJuguete;
 import logica.excepciones.ExceptionNinio;
 import logica.excepciones.ExceptionPersistencia;
@@ -30,8 +31,14 @@ public class ControllerDarDescripcion extends Controladora {
         try {
             int cedN = Integer.parseInt(cedulaNiño);
             int numJ = Integer.parseInt(numeroJuguete);
-            String desc = super.getFachada().darDescripcion(cedN, numJ);
-            ((Ventana) super.getVentana()).mostrarMensaje("La descripción del juguete es: " + desc, Ventana.SUCCESS);
+            IFachada f = super.getFachada();
+            if(f != null){
+                String desc = f.darDescripcion(cedN, numJ);
+                ((Ventana) super.getVentana()).mostrarMensaje("La descripción del juguete es: " + desc, Ventana.SUCCESS);
+            }
+            else{
+                throw new RemoteException();
+            }
         } catch (ExceptionPersistencia ex) {
             ((Ventana) super.getVentana()).mostrarMensaje(ex.getMessage(), Ventana.ERROR);
         } catch (ExceptionNinio ex) {
